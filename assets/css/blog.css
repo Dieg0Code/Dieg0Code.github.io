@@ -1,0 +1,206 @@
+.blog-list__title-h2 {
+    font-size: var(--h2-font-size);
+    font-weight: 600;
+    color: var(--first-color);
+    text-align: center;
+    padding: 3rem 0 0 0;
+}
+
+.blog-list__title-h2::after {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 3px;
+    background-color: var(--first-color);
+    margin: 1rem auto 0 auto;
+    transition: width .3s ease, background-color .3s ease;
+}
+
+.blog-list__title-h2:hover::after {
+    width: 200px;
+    transition: width 0.3s ease;
+}
+
+.blog-list__title-h2:hover {
+    color: var(--first-color);
+    transition: color 0.3s ease;
+}
+
+
+.blog-list__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--container-color);
+    max-width: 40%;
+    margin: 2rem auto 0 auto; /* Añade margen superior */
+}
+
+.blog-list__item {
+    background-color: var(--body-color);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.blog-list__item:hover {
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+}
+
+.blog-list__item:hover .blog-list__title {
+    color: var(--first-color);
+    transition: color 0.3s ease;
+}
+
+
+.blog-list__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.blog-list__title {
+    font-size: var(--h2-font-size);
+    font-weight: 600;
+    color: var(--title-color);
+    margin: 0;
+}
+
+.blog-post__title-post {
+    font-size: var(--h2-font-size);
+    font-weight: 900;
+    color: var(--first-color);
+    text-align: center;
+    padding: 3rem 0 0 0;
+}
+
+.blog-post__title-post::after {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 3px;
+    background-color: var(--first-color);
+    margin: 1rem auto 0 auto;
+    transition: width .3s ease, background-color .3s ease;
+}
+
+.blog-post__title-post:hover::after {
+    width: 200px;
+    transition: width 0.3s ease;
+}
+
+.blog-post__title-post:hover {
+    color: var(--first-color);
+    transition: color 0.3s ease;
+}
+
+
+.blog-list__description {
+    font-size: var(--small-font-size);
+    color: var(--text-color);
+    margin: 0.5rem 0;
+}
+
+.blog-list__date {
+    font-size: var(--smaller-font-size);
+    color: var(--text-light-color);
+}
+
+.blog-post__body-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 60%;
+    margin: 3rem auto 3rem auto; /* Añade margen superior */
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+}
+
+.blog-post__content {
+    background-color: var(--body-color);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.blog-post__image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0 1rem 0;
+}
+
+.blog-post__image {
+    width: 100%; /* Ajusta el tamaño según sea necesario */
+    height: 50%;
+    border-radius: 1rem;
+}
+
+.parragraph {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    text-align: justify;
+    padding: 1rem 0 1rem 0;
+}
+
+.title-typewriter {
+    overflow: hidden;
+    border-right: .15em solid var(--first-color);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--first-color); }
+}
+
+.title-color-shift {
+    animation: colorShift 3s infinite alternate;
+}
+
+@keyframes colorShift {
+    0% { color: var(--first-color); }
+    50% { color: var(--second-color); }
+    100% { color: var(--third-color); }
+}
+
+.title-blur {
+    animation: blurEffect 3s infinite;
+}
+
+@keyframes blurEffect {
+    0%, 100% { filter: blur(0px); }
+    50% { filter: blur(2px); }
+}
+
+.title-bounce {
+    display: inline-block;
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Opción 5: Aparecer gradualmente */
+.title-fade-in {
+    animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

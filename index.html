@@ -13,21 +13,32 @@
     />
 
     <!-- ======== CSS ========= -->
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
     <title>Portfolio - Dieg0code</title>
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.svg" />
   </head>
   <body class="dark-theme">
+    <!-- Nuevo navbar -->
+    <nav class="navbar">
+      <ul class="navbar__list">
+        <li class="navbar__item">
+          <a href="#home" class="navbar__link">Inicio</a>
+        </li>
+        <li class="navbar__item">
+          <a href="blog/index.html" class="navbar__link">Blog</a>
+        </li>
+      </ul>
+      <!-- Botón de cambio de tema -->
+      <i class="ri-moon-line change-theme" id="theme-button"></i>
+    </nav>
+    
     <!-- ======== HEADER PROFILE ========= -->
     <header class="profile container">
-      <!-- Theme button -->
-      <i class="ri-moon-line change-theme" id="theme-button"></i>
-
       <div class="profile__container grid">
         <div class="profile__data">
           <div class="profile__border">
             <div class="profile__perfil">
-              <img src="assets/img/i2.png" alt="" />
+              <img src="assets/img/me.webp" alt="" />
             </div>
           </div>
 
@@ -35,13 +46,6 @@
           <h3 class="profile__profession">Analista programador</h3>
 
           <ul class="profile__social">
-            <a
-              href="https://www.instagram.com/diego.obando0o0o/"
-              target="_blank"
-              class="profile__social-link"
-            >
-              <i class="ri-instagram-line"></i>
-            </a>
             <a
               href="https://www.linkedin.com/in/diego-obando/"
               target="_blank"
@@ -63,45 +67,20 @@
           <div class="profile__info-group">
             <div class="lab__text"></div>
           </div>
-          <!-- <div class="profile__info-group">
-            <h3 class="profile__info-number">99</h3>
-            <p class="profile__info-description">
-              Lorem ipsum <br />
-              dolor.
-            </p>
-          </div>
-          <div class="profile__info-group">
-            <h3 class="profile__info-number">99</h3>
-            <p class="profile__info-description">
-              Lorem ipsum <br />
-              dolor.
-            </p>
-          </div> -->
         </div>
 
         <div class="profile__buttons">
-          <a
-            download=""
-            href="assets/pdf/Curriculum-Diego-Obando.pdf"
-            class="button"
-          >
+          <a download="" href="assets/pdf/cv_diego_obando.pdf" class="button">
             Descargar CV <i class="ri-download-line"></i>
           </a>
 
           <div class="profile__buttons-small">
             <a
-              href="https://twitter.com/Diegoobando0"
+              href="mailto:diegoobando20@gmail.com"
               target="_blank"
               class="button button__small button__gray"
             >
-              <i class="ri-twitter-line"></i>
-            </a>
-            <a
-              href="https://m.me/diego.obando0o0o0"
-              target="_blank"
-              class="button button__small button__gray"
-            >
-              <i class="ri-messenger-line"></i>
+              <i class="ri-mail-line"></i>
             </a>
           </div>
         </div>
@@ -113,7 +92,10 @@
       <section class="filters container">
         <!-- ============ FILTERS TABS ============== -->
         <ul class="filters__content">
-          <button class="filters__button filter-tab-active" data-target="#projects">
+          <button
+            class="filters__button filter-tab-active"
+            data-target="#projects"
+          >
             Proyectos
           </button>
 
@@ -122,15 +104,27 @@
 
         <div class="filters__sections">
           <!-- ========== PROJECTS =========== -->
-          <div class="projects__content grid filters__active" data-content id="projects">
+          <div
+            class="projects__content grid filters__active"
+            data-content
+            id="projects"
+          >
             <!-- ========= P01 ======== -->
             <article class="projects__card">
-              <img src="assets/img/imgRustRepo.jpg" alt="" class="projects__img" />
+              <img
+                src="assets/img/serverless.webp"
+                alt=""
+                class="projects__img"
+              />
               <div class="projects__modal">
                 <div>
-                  <span class="projects__subtitle">Rust</span>
-                  <h3 class="projects__title">Apuntes sobre Rust</h3>
-                  <a href="https://github.com/Dieg0Code/Intro_to_Rust/tree/main/rust%20v2018" target="__blank" class="projects__button button button__small">
+                  <span class="projects__subtitle">API Scraper</span>
+                  <h3 class="projects__title">Serverless backend built with Terraform and AWS</h3>
+                  <a
+                    href="https://github.com/Dieg0Code/portfolio_02_lambda_api_scraper"
+                    target="__blank"
+                    class="projects__button button button__small"
+                  >
                     <i class="ri-link"></i>
                   </a>
                 </div>
@@ -138,12 +132,18 @@
             </article>
             <!-- ========= P02 ======== -->
             <article class="projects__card">
-              <img src="assets/img/imgBackend.jpg" alt="" class="projects__img" />
+              <img src="assets/img/golang.webp" alt="" class="projects__img" />
               <div class="projects__modal">
                 <div>
-                  <span class="projects__subtitle">Backend</span>
-                  <h3 class="projects__title">Fundamentos de Backend</h3>
-                  <a href="https://github.com/Dieg0Code/Desarrollo_Backend" target="__blank" class="projects__button button button__small">
+                  <span class="projects__subtitle">Player profile</span>
+                  <h3 class="projects__title">
+                    Monolithic backend, built with Golang
+                  </h3>
+                  <a
+                    href="https://github.com/Dieg0Code/portfolio_01_player_profile"
+                    target="__blank"
+                    class="projects__button button button__small"
+                  >
                     <i class="ri-link"></i>
                   </a>
                 </div>
@@ -151,51 +151,18 @@
             </article>
             <!-- ========= P03 ======== -->
             <article class="projects__card">
-              <img src="assets/img/imgJS.jpg" alt="" class="projects__img" />
+              <img src="assets/img/k8s.webp" alt="" class="projects__img" />
               <div class="projects__modal">
                 <div>
-                  <span class="projects__subtitle">JavaScript</span>
-                  <h3 class="projects__title">Apuntes sobre JavaScript</h3>
-                  <a href="https://github.com/Dieg0Code/JavaScript/tree/main/Apuntes" target="__blank" class="projects__button button button__small">
-                    <i class="ri-link"></i>
-                  </a>
-                </div>
-              </div>
-            </article>
-            <!-- ========= P04 ======== -->
-            <article class="projects__card">
-              <img src="assets/img/imgUIUX.jpg" alt="" class="projects__img" />
-              <div class="projects__modal">
-                <div>
-                  <span class="projects__subtitle">UX/UI</span>
-                  <h3 class="projects__title">Fundamentos de UX/UI</h3>
-                  <a href="https://github.com/Dieg0Code/ui-ux-prototipado-digital" target="__blank" class="projects__button button button__small">
-                    <i class="ri-link"></i>
-                  </a>
-                </div>
-              </div>
-            </article>
-            <!-- ========= P05 ======== -->
-            <article class="projects__card">
-              <img src="assets/img/imgReact.jpg" alt="" class="projects__img" />
-              <div class="projects__modal">
-                <div>
-                  <span class="projects__subtitle">React</span>
-                  <h3 class="projects__title">Apuntes sobre React</h3>
-                  <a href="https://github.com/Dieg0Code/React/tree/main/Apuntes" target="__blank" class="projects__button button button__small">
-                    <i class="ri-link"></i>
-                  </a>
-                </div>
-              </div>
-            </article>
-            <!-- ========= P06 ======== -->
-            <article class="projects__card">
-              <img src="assets/img/imgAndroid.jpg" alt="" class="projects__img" />
-              <div class="projects__modal">
-                <div>
-                  <span class="projects__subtitle">Android</span>
-                  <h3 class="projects__title">Fundamentos de desarrollo Android</h3>
-                  <a href="https://github.com/Dieg0Code/Apuntes_Android" target="__blank" class="projects__button button button__small">
+                  <span class="projects__subtitle">Microservices</span>
+                  <h3 class="projects__title">
+                    Microservices with Node.js, Spring and Golang
+                  </h3>
+                  <a
+                    href="https://github.com/Dieg0Code/portfolio_03_microservices"
+                    target="__blank"
+                    class="projects__button button button__small"
+                  >
                     <i class="ri-link"></i>
                   </a>
                 </div>
@@ -215,7 +182,6 @@
 
                     <div>
                       <h3 class="skills__name">HTML</h3>
-                      <span class="skills__level">Básico</span>
                     </div>
                   </div>
                   <div class="skills__data">
@@ -223,7 +189,6 @@
 
                     <div>
                       <h3 class="skills__name">CSS</h3>
-                      <span class="skills__level">Básico</span>
                     </div>
                   </div>
                   <div class="skills__data">
@@ -231,7 +196,13 @@
 
                     <div>
                       <h3 class="skills__name">JavaScript</h3>
-                      <span class="skills__level">Intermedio</span>
+                    </div>
+                  </div>
+                  <div class="skills__data">
+                    <i class="ri-checkbox-circle-line"></i>
+
+                    <div>
+                      <h3 class="skills__name">React Native</h3>
                     </div>
                   </div>
                 </div>
@@ -242,7 +213,6 @@
 
                     <div>
                       <h3 class="skills__name">React</h3>
-                      <span class="skills__level">Básico</span>
                     </div>
                   </div>
                   <div class="skills__data">
@@ -250,7 +220,6 @@
 
                     <div>
                       <h3 class="skills__name">Figma</h3>
-                      <span class="skills__level">Básico</span>
                     </div>
                   </div>
                   <div class="skills__data">
@@ -258,7 +227,13 @@
 
                     <div>
                       <h3 class="skills__name">Git</h3>
-                      <span class="skills__level">Intermedio</span>
+                    </div>
+                  </div>
+                  <div class="skills__data">
+                    <i class="ri-checkbox-circle-line"></i>
+
+                    <div>
+                      <h3 class="skills__name">Flutter</h3>
                     </div>
                   </div>
                 </div>
@@ -274,34 +249,45 @@
                     <i class="ri-checkbox-circle-line"></i>
 
                     <div>
-                      <h3 class="skills__name">Typescript</h3>
-                      <span class="skills__level">Básico</span>
+                      <h3 class="skills__name">Terraform</h3>
                     </div>
                   </div>
                   <div class="skills__data">
                     <i class="ri-checkbox-circle-line"></i>
 
                     <div>
-                      <h3 class="skills__name">MySQL</h3>
-                      <span class="skills__level">Intermedio</span>
+                      <h3 class="skills__name">SQL</h3>
                     </div>
                   </div>
                   <div class="skills__data">
                     <i class="ri-checkbox-circle-line"></i>
 
                     <div>
-                      <h3 class="skills__name">MongoDB</h3>
-                      <span class="skills__level">Básico</span>
+                      <h3 class="skills__name">NO-SQL</h3>
                     </div>
                   </div>
+                  <div class="skills__data">
+                    <i class="ri-checkbox-circle-line"></i>
+
+                    <div>
+                      <h3 class="skills__name">Golang</h3>
+                    </div>
+                  </div>
+                  
                 </div>
 
                 <div class="skills__group">
                   <div class="skills__data">
                     <i class="ri-checkbox-circle-line"></i>
+
                     <div>
-                      <h3 class="skills__name">Node Js</h3>
-                      <span class="skills__level">Intermedio</span>
+                      <h3 class="skills__name">Spring Boot</h3>
+                    </div>
+                  </div>
+                  <div class="skills__data">
+                    <i class="ri-checkbox-circle-line"></i>
+                    <div>
+                      <h3 class="skills__name">AWS</h3>
                     </div>
                   </div>
                   <div class="skills__data">
@@ -309,15 +295,13 @@
 
                     <div>
                       <h3 class="skills__name">Docker</h3>
-                      <span class="skills__level">Básico</span>
                     </div>
                   </div>
                   <div class="skills__data">
                     <i class="ri-checkbox-circle-line"></i>
 
                     <div>
-                      <h3 class="skills__name">Linux</h3>
-                      <span class="skills__level">Intermedio</span>
+                      <h3 class="skills__name">Spring Boot</h3>
                     </div>
                   </div>
                 </div>
@@ -330,9 +314,7 @@
 
     <!-- ======== FOOTER ========= -->
     <footer class="footer container">
-      <span class="footer_copy">
-        &#169; Dieg0Code.
-      </span>
+      <span class="footer_copy"> &#169; Dieg0Code. </span>
     </footer>
 
     <!-- ======== SCROLLREVEAL ========= -->

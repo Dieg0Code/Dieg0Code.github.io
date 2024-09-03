@@ -1,0 +1,15 @@
+/* GOOGLE FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import "https://fonts.googleapis.com/css?family=Roboto+Mono:100";
+
+/* ================= LAB ======================= */
+.lab__text {
+    /* font-family: 'Roboto Mono', monospace; */
+    font-weight: 100;
+    font-size: 28px;
+    color: var(--text-color);
+}
+
+.dud {
+    color: #757575;
+}

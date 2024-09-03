@@ -1,0 +1,63 @@
+/* Ajustes para el contenedor principal del navbar */
+.navbar {
+    position: fixed; /* Fija el navbar en la parte superior al hacer scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--body-color);
+    padding: 1rem 0; /* Espaciado superior e inferior */
+    margin-bottom: 2rem;
+    z-index: 100;
+    transition: 0.3s;
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+    display: flex; /* Flexbox para la alineación horizontal */
+    align-items: center; /* Alinea los elementos verticalmente */
+}
+
+/* Ajustes para la lista de elementos del navbar */
+.navbar__list {
+    display: flex;
+    justify-content: center; /* Centra los elementos del navbar horizontalmente */
+    align-items: center; /* Alinea los elementos verticalmente */
+    list-style: none;
+    margin: 0 auto; 
+    flex-grow: 1; /* Ajusta el tamaño del navbar */
+}
+
+/* Ajustes para los elementos individuales del navbar */
+.navbar__item {
+    margin: 0 1rem;
+}
+
+/* Ajustes para los enlaces del navbar */
+.navbar__link {
+    color: var(--title-color);
+    font-size: var(--normal-font-size);
+    font-weight: 500;
+    position: relative;
+    transition: .3s;
+}
+
+.navbar__link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: var(--first-color);
+    transition: width .3s ease, background-color .3s ease;
+}
+
+.navbar__link:hover::after {
+    width: 100%;
+    left: 0;
+    background: var(--first-color);
+}
+
+.navbar__link:hover {
+    color: var(--first-color);
+    font-weight: 700;
+    transition: .3s;
+}

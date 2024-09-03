@@ -1,0 +1,16 @@
+/* main.css */
+@import 'variables.css';       /* Define variables CSS como colores y fuentes */
+@import 'base.css';            /* Estilos globales básicos */
+@import 'typography.css';      /* Estilos relacionados con la tipografía */
+@import 'layout.css';          /* Estilos de disposición general */
+@import 'navbar.css';          /* Estilos para la barra de navegación */
+@import 'blog.css';            /* Estilos para la lista y los elementos del blog */
+@import 'profile.css';         /* Estilos para el perfil del usuario */
+@import 'buttons.css';         /* Estilos para los botones */
+@import 'dark-theme.css';      /* Estilos para el tema oscuro */
+@import 'filter-tabs.css';     /* Estilos para filtros y pestañas */
+@import 'footer.css';          /* Estilos para el pie de página */
+@import 'projects-card.css';   /* Estilos para las tarjetas de proyectos */
+@import 'responsive.css';      /* Estilos para diseño responsive */
+@import 'skills-card.css';     /* Estilos para las tarjetas de habilidades */
+@import 'utilities.css';       /* Utilidades CSS adicionales */
