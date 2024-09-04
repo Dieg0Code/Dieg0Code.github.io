@@ -19,11 +19,13 @@
         column-gap: 1rem;
     }
 
-    /* 
-    .profile__perfil img {
+    .blog-list__container {
+        width: 100%; /* Increase width for very small devices */
+    }
+
+    .blog-post__body-container {
         width: 100%;
-        height: 100%;
-    } */
+    }
 }
 
 /* for medium devices */
@@ -37,8 +39,17 @@
         width: 332px;
         margin: 3rem auto;
     }
+
+    .blog-list__container {
+        width: 100%; /* Adjust width for medium devices */
+    }
+    
+    .blog-post__body-container {
+        width: 100%;
+    }
 }
 
+/* for large devices */
 @media screen and (min-width: 776px) {
 
     .projects__content,
@@ -49,6 +60,14 @@
     .skills__content {
         justify-content: center;
         column-gap: 3rem;
+    }
+
+    .blog-list__container {
+        width: 70%; /* Further adjust width for larger devices */
+    }
+
+    .blog-post__body-container {
+        width: 70%;
     }
 }
 
@@ -114,5 +133,13 @@
 
     .footer_copy {
         margin: 4.5rem 0 2.5rem;
+    }
+
+    .blog-list__container {
+        width: 60%; /* Return to original 60% width for very large devices */
+    }
+
+    .blog-post__body-container {
+        width: 60%;
     }
 }
