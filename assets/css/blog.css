@@ -95,7 +95,7 @@
     font-weight: 900;
     color: var(--first-color);
     text-align: center;
-    padding: 3rem 0 0 0;
+    padding: 1rem;
 }
 
 .blog-post__title-post::after {
@@ -145,7 +145,7 @@
     padding: 1rem;
     border-radius: 5px;
     width: auto;
-    align-self: center;
+    align-self: self-start;
 }
 
 .blog-post__image-container {
@@ -175,6 +175,84 @@
     color: var(--text-color);
     text-align: justify;
     padding: 1rem 0 1rem 0;
+}
+
+.parragraph strong {
+    color: var(--first-color);
+}
+
+.code-block {
+    background-color: var(--container-color);
+    border-radius: 8px;
+    margin: 2rem 0 1.5rem;
+    position: relative;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 4px 6px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+    border-left: 4px solid var(--first-color);
+    max-width: 100%;
+    overflow-x: auto; /* Agrega scroll horizontal si el contenido es muy grande */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.code-block::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    background-color: var(--container-color);
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.code-block::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--first-color);
+    border-radius: 8px 0 0 8px;
+}
+
+.code-block:hover {
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+    transform: translateY(-3px);
+}
+
+
+.code-block pre {
+    margin: 0;
+    padding: 1.5rem 1.25rem 1.25rem;
+    overflow: auto; /* Asegura que el contenido se mantenga dentro del contenedor */
+}
+
+.code-block code {
+    display: block; /* Cambia a block para que respete el ancho del contenedor */
+    width: 100%; /* Asegura que el código ocupe todo el ancho disponible */
+    white-space: pre-wrap; /* Permite que el texto se ajuste dentro del contenedor */
+    word-wrap: break-word; /* Permite que las palabras largas se dividan y ajusten */
+}
+
+.styled-list {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-size: var(--normal-font-size);
+    color: var(--text-color);
+}
+
+.styled-list li {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.styled-list li strong {
+    color: var(--first-color);
 }
 
 .title-typewriter {

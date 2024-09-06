@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog 01</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+  </head>
+  <body class="dark-theme">
+    <nav class="navbar">
+      <ul class="navbar__list">
+        <li class="navbar__item">
+          <a href="../../index.html" class="navbar__link">Inicio</a>
+        </li>
+        <li class="navbar__item">
+          <a href="../index.html" class="navbar__link">Blog</a>
+        </li>
+      </ul>
+      <!-- <i class="ri-moon-line change-theme" id="theme-button"></i> -->
+    </nav>
+    <h1>Blog 01</h1>
+    <div class="blog-post__body-container">
+      <h2 class="blog-post__title-post title-fade-in">¿Qué es RAG?</h2>
+      <article class="blog-post__content">
+        <span class="blog-post__date">Publicado el: 06/08/2024</span>
+        <p class="parragraph">
+          RAG es el acrónimo de
+          <strong>Retrieval-Augmented Generation</strong> lo que en español
+          significa <strong>Generación aumentada por recuperación</strong>,
+          consiste en <b>aumentar</b> la generación de texto que hace un
+          <strong>LLM</strong> como <b>ChatGPT</b> con la capacidad de recuperar
+          información desde una base de datos o un corpus de texto externo al
+          que se usó para entrenar el modelo.
+        </p>
+
+        <p class="parragraph">
+          Es bien sabido que los <strong>LLMs</strong> son entrenados con
+          grandes cantidades de texto recuperado desde internet, tiene
+          conocimiento prácticamente en todo los ámbitos del conocimiento
+          humano, pero con la limitación de que su conocimiento suele estar
+          limitado a la fecha de corte de los datos con los que fue entrenado,
+          por ejemplo, <strong>ChatGPT-3.5</strong> no suele tener conocimiento
+          de eventos o información generada después de septiembre de 2021. Por
+          lo general esto es suficiente para responder cualquier duda que uno
+          suele tener, para un uso general está bien.
+        </p>
+        <p class="parragraph">
+          Pero el potencial de un <strong>LLM</strong> no se limita solo a
+          responder las dudas de los usuarios, <strong>OpenAI</strong> lo sabe y
+          por eso ofrece una <b>API</b> para poder consumir sus modelos y de
+          esta forma integrar <strong>Inteligencia Artificial</strong> a
+          aplicaciones de todo tipo
+        </p>
+        <p class="parragraph">
+          Supongamos que tenemos una tienda que vende peluches, tenemos peluches
+          de todo tipo y los vendemos desde un perfil de Instagram. Nuestro
+          principal canal de venta es mediante el chat de Instagram y WhatsApp
+          en el cual nos coordinamos con los clientes para realizar las ventas y
+          para resolver dudas. El negocio está creciendo y cada vez tenemos mas
+          clientes que hacen consultas y quieren comprar algún peluche, los
+          dueños del negocio ya no dan abasto con tantos mensajes y se les
+          ocurre la idea de montar un bot que pueda responder las consultas de
+          los clientes, bot que usa ChatGPT para generar las respuestas, pero
+          tenemos algunos problemas con esa idea, por ejemplo, ¿Como sabe el bot
+          cuales son los precios de los peluches?, el negocio comenzó a
+          funcionar a mediados del 2024, ademas de que no es un negocio famoso,
+          por ende no hay forma de que ChatGPT tenga conocimiento de él ni de
+          sus productos.
+        </p>
+        <p class="parragraph">
+          Es aquí donde hace su magia <strong>RAG</strong>, como mencionaba
+          antes, <strong>RAG</strong> es una técnica que permite aumentar la
+          generación de un <strong>LLM</strong> mediante recuperación, pero,
+          ¿Qué aumenta? y ¿Qué recupera?. Un <strong>LLM</strong> como
+          <strong>ChatGPT</strong> puede ser instruido mediante un
+          <strong>prompt</strong> de tipo <strong>System</strong> para darle un
+          cierta personalidad y para darle indicaciones de como debe comportarse
+          y que información debe saber. Por ejemplo:
+        </p>
+        <pre class="code-block"><code class="language-javascript">
+          {
+            "role": "system",
+            "content": "Eres un asistente virtual de una tienda de peluches"
+          }
+        </code></pre>
+        <p class="parragraph">
+          Esto se logra mediante el uso de la API de <strong>OpenAI</strong>,
+          esta nos permite manipular el comportamiento de
+          <strong>ChatGPT</strong> mediante el uso de
+          <strong>prompts</strong> de tipo <strong>System</strong>. El prompt
+          <strong>System</strong> es importante porque es ahí en donde le
+          podemos dar información que el modelo no tiene por defecto, como por
+          ejemplo, los precios de los peluches. Pero esta información debe ser
+          añadida de forma dinámica porque un cliente no siempre va a preguntar
+          por el mismo producto , ademas no podemos pasarle un
+          <strong>prompt</strong> con toda la información de la tiendo, quizás
+          tenemos miles de productos y el prompt <strong>System</strong> tiene
+          un limite de tokens que puede recibir. Es aquí en donde entra la parte
+          de <strong>Retrieval</strong> o recuperación.
+        </p>
+        <p class="parragraph">
+          Cuando nosotros hablamos con un <strong>LLM</strong> el modelo en
+          realidad no está recibiendo el texto tal cual nosotros lo enviamos,
+          sino que mediante un proceso de <strong>embedding</strong> transforma
+          nuestra palabras en vectores de números, en otras palabras, convierte
+          el lenguaje en una representación matemática de los conceptos que
+          estamos tratando de comunicar. Esto es importante saberlo porque es
+          así como almacena información un <strong>LLM</strong>, entonces si
+          queremos interactuar con el de una forma mas profunda debemos hablar
+          su lenguaje.
+        </p>
+        <p class="parragraph">
+          Como el <strong>LLM</strong> no posee información de la tienda debemos
+          encontrar una forma de que pueda acceder a estos datos, es aquí en
+          donde entra una <strong>Base de datos de vectores</strong>. Como
+          mencionaba, un <strong>LLM</strong> en su "cabeza" solo tiene
+          vectores, que representan conceptos, palabras, frases, etc. Entonces
+          para añadirle información externa, nuestra base de datos de la tienda
+          debe tener este formato, de vectores, de esta forma el
+          <strong>LLM</strong> puede buscar en la base de datos la información
+          que necesita para responder las consultas de los clientes. ¿Como se
+          logra esto?, el proceso es el siguiente:
+        </p>
+        <div class="blog-post__image-container">
+          <img
+            src="./assets/howRAGWorks.webp"
+            alt="Ilustración de como funciona RAG"
+            class="blog-post__image"
+          />
+        </div>
+        <ol class="styled-list">
+          <li>
+            <strong>Indexación</strong>: Se indexa la información de la tienda
+            en una base de datos de vectores, por ejemplo, si tenemos una tabla
+            de productos, cada producto debe ser representado por un vector.
+          </li>
+          <br />
+          <li>
+            <strong>Recuperación</strong>: Cuando un cliente hace una consulta
+            al sistema, el sistema transforma la consulta a un embedding, esto
+            se puede hacer mediante el uso de la API de
+            <strong>OpenAI</strong> la cual tiene una función para generar
+            embeddings de texto. Con el embedding de la consulta, el sistema
+            hace una búsqueda <strong>semántica</strong> de la información en la
+            base de datos de vectores. Osea, a diferencia de una consulta SQL
+            tradicional en donde se busca la coincidencia exacta de un valor, en
+            una búsqueda semántica se busca por significado, es decir, se busca
+            información que en base al significado de la consulta
+          </li>
+          <br />
+          <li>
+            <strong>Generación</strong>: Con la información recuperada, el
+            sistema inyecta esta información en el prompt
+            <strong>System</strong> y le pasa el prompt al
+            <strong>LLM</strong> para que genere la respuesta.
+          </li>
+        </ol>
+        <pre class="code-block"><code class="language-javascript">
+          {
+            "role": "system",
+            "content": "Eres un asistente virtual de una tienda de peluches. Context: Producto: Peluche de oso, Precio: $20",
+          }
+        </code></pre>
+        <p class="parragraph">
+          De esta forma podemos añadirle la información de nuestra tienda al
+          <strong>LLM</strong> y hacer que responda las consultas de los
+          clientes de forma mas precisa y personalizada.
+        </p>
+        <p class="parragraph">
+          Lo interesante en si no es el poder añadirle información extra a un
+          <strong>LLM</strong>, aunque en si eso es bastante útil, pero mas
+          interesante es la búsqueda semántica que se puede hacer con una
+          <strong>base de datos de vectores</strong>, podemos indexar
+          información de cualquier tipo, información que para nosotros quizás no
+          tenga ninguna relación entre si, pero para un
+          <strong>LLM</strong> puede que si la tenga, esto nos permite hacer
+          búsquedas en datos, archivos, imágenes, etc. todo se puede vectorizar
+          y mediante un <strong>LLM</strong> podemos buscar las conexiones que
+          hay entre estos datos usando lenguaje natural.
+        </p>
+      </article>
+    </div>
+  </body>
+</html>
