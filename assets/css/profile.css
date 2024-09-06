@@ -55,7 +55,6 @@
 }
 
 .profile__profession:hover {
-    color: var(--first-color);
     font-weight: 700;
 }
 

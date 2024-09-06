@@ -13,17 +13,8 @@
     height: 3px;
     background-color: var(--first-color);
     margin: 1rem auto 0 auto;
-    transition: width .3s ease, background-color .3s ease;
-}
-
-.blog-list__title-h2:hover::after {
-    width: 200px;
-    transition: width 0.3s ease;
-}
-
-.blog-list__title-h2:hover {
-    color: var(--first-color);
-    transition: color 0.3s ease;
+    animation: expand-line .6s ease forwards;
+    animation-delay: 1s;
 }
 
 
@@ -105,17 +96,19 @@
     height: 3px;
     background-color: var(--first-color);
     margin: 1rem auto 0 auto;
-    transition: width .3s ease, background-color .3s ease;
+    /* Aquí definimos la animación al cargar la página */
+    animation: expand-line .6s ease forwards;
+    animation-delay: 1s;
 }
 
-.blog-post__title-post:hover::after {
-    width: 200px;
-    transition: width 0.3s ease;
-}
-
-.blog-post__title-post:hover {
-    color: var(--first-color);
-    transition: color 0.3s ease;
+/* Definimos la animación que expande la línea */
+@keyframes expand-line {
+    0% {
+        width: 0px;
+    }
+    100% {
+        width: 200px;
+    }
 }
 
 
