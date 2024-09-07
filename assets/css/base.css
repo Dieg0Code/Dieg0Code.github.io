@@ -32,3 +32,6 @@ img {
     max-width: 100%;
     height: auto;
 }
+strong {
+    color: var(--first-color);
+}

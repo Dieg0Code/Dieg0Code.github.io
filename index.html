@@ -76,9 +76,14 @@
         </div>
 
         <div class="profile__buttons">
-          <a download="" href="assets/pdf/cv_diego_obando.pdf" class="button" tabindex="0">
+          <a
+            download=""
+            href="assets/pdf/cv_diego_obando.pdf"
+            class="button"
+            tabindex="0"
+          >
             <span>Descargar CV <i class="ri-download-line"></i></span>
-        </a>
+          </a>
 
           <div class="profile__buttons-small">
             <a
@@ -95,7 +100,73 @@
 
     <!-- ======== MAIN ========= -->
     <main class="main">
-      <section class="projects-section">
+      <!--  ======== ABOUT ME ========= -->
+      <section class="about-me container">
+        <h2 class="projects-section__title">Sobre Mí</h2>
+        <div class="about-me__content">
+          <p class="about-me__description">
+            <strong>Backend developer</strong> autodidacta con formación
+            académica en programación y análisis de sistemas. Desde
+            <strong>2018</strong>, he profundizado en diversas áreas como
+            DevOps, frontend y mobile, aunque mi verdadera pasión es el backend.
+            Me especializo en tecnologías como Go, Java y TypeScript, y disfruto
+            construyendo soluciones robustas y escalables. Actualmente, también
+            integro prácticas de DevOps para optimizar mis flujos de trabajo.
+          </p>
+          <ul class="about-me__skills">
+            <li class="about-me__skill">Go</li>
+            <li class="about-me__skill">Gin</li>
+            <li class="about-me__skill">Java</li>
+            <li class="about-me__skill">Spring Boot</li>
+            <li class="about-me__skill">TypeScript</li>
+            <li class="about-me__skill">Node.js</li>
+            <li class="about-me__skill">AWS</li>
+            <li class="about-me__skill">Lambda</li>
+            <li class="about-me__skill">DynamoDB</li>
+            <li class="about-me__skill">PostgreSQL</li>
+            <li class="about-me__skill">Terraform</li>
+            <li class="about-me__skill">TDD</li>
+            <li class="about-me__skill">Docker</li>
+          </ul>
+        </div>
+      </section>
+      <!--  ======== WORK EXPERIENCE ========= -->
+      <section class="work-experience container">
+        <h2 class="projects-section__title">Experiencia Laboral</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">ene. 2024 - may. 2024</div>
+              <h3>Desarrollador Backend (Práctica profesional)</h3>
+              <p>WorkCapIT</p>
+              <ul>
+                <li>
+                  Desarrollo de API REST con Java, Spring Boot y PostgreSQL.
+                </li>
+                <li>Optimización y desarrollo de endpoints de la API.</li>
+                <li>Migración de app Mobile de Flutter a Kotlin.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">sept. 2021 - nov. 2021</div>
+              <h3>Software Engineer (Pasantía)</h3>
+              <p>Codefire</p>
+              <ul>
+                <li>Programación backend con Express, Node y TypeScript.</li>
+                <li>Desarrollo con sistema de control de versiones Git.</li>
+                <li>Desarrollo bajo metodologías ágiles.</li>
+                <li>Análisis de interfaces gráficas.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--  ======== PROJECTS ========= -->
+      <section class="projects-section container">
         <h2 class="projects-section__title">Proyectos</h2>
         <div class="projects-section__container">
           <!--  ======== Project 01 ========= -->
@@ -121,7 +192,8 @@
               <h3 class="projects-section-card__title">Monolithic API</h3>
               <p class="projects-section-card__description">
                 API Monolítica creada con <strong>GO</strong>,
-                <strong>Gin</strong>, <strong>GORM</strong> y <strong>PostgreSQL</strong>
+                <strong>Gin</strong>, <strong>GORM</strong> y
+                <strong>PostgreSQL</strong>
               </p>
               <a
                 href="https://github.com/Dieg0Code/portfolio_02_lambda_api_scraper"

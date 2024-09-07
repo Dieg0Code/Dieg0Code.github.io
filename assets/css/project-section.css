@@ -1,6 +1,6 @@
 .projects-section {
     max-width: 968px;
-    margin: 2rem auto 0 auto;
+    margin: 5rem auto 0 auto;
     padding: 1rem;
 }
 
@@ -28,6 +28,7 @@
     0% {
         width: 0px;
     }
+
     100% {
         width: 200px;
     }
@@ -93,11 +94,13 @@
 
 .projects-section-card__button {
     background: transparent;
-    padding: 0.75rem 1.5rem; /* Aumentado el padding */
+    padding: 0.75rem 1.5rem;
+    /* Aumentado el padding */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--normal-font-size); /* Cambiado a un tamaño de fuente normal */
+    font-size: var(--normal-font-size);
+    /* Cambiado a un tamaño de fuente normal */
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
@@ -108,8 +111,10 @@
     color: var(--first-color);
     transition: color 0.3s 0.1s ease-out;
     text-align: center;
-    height: 3.5rem; /* Aumentado ligeramente */
-    width: 10rem; /* Aumentado ligeramente */
+    height: 3.5rem;
+    /* Aumentado ligeramente */
+    width: 10rem;
+    /* Aumentado ligeramente */
     position: relative;
 }
 
@@ -148,7 +153,7 @@
     .projects-section__container {
         grid-template-columns: 1fr;
     }
-    
+
     .projects-section__card {
         max-width: 100%;
     }

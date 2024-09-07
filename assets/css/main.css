@@ -15,3 +15,5 @@
 @import 'skills-card.css';     /* Estilos para las tarjetas de habilidades */
 @import 'utilities.css';       /* Utilidades CSS adicionales */
 @import 'project-section.css'; /* Estilos para la sección de proyectos */
+@import 'about-me.css';        /* Estilos para la sección "Sobre mí" */
+@import 'work-experience.css'; /* Estilos para la sección de experiencia laboral */
