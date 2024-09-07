@@ -24,9 +24,8 @@
     gap: 1rem;
     padding: 1rem;
     background-color: var(--container-color);
-    max-width: 90%;
+    max-width: 968px;
     margin: 2rem auto 0 auto;
-    /* Añade margen superior */
 }
 
 .blog-list__item {
@@ -96,7 +95,6 @@
     height: 3px;
     background-color: var(--first-color);
     margin: 1rem auto 0 auto;
-    /* Aquí definimos la animación al cargar la página */
     animation: expand-line .6s ease forwards;
     animation-delay: 1s;
 }
@@ -166,7 +164,7 @@
 .parragraph {
     font-size: var(--normal-font-size);
     color: var(--text-color);
-    text-align: justify;
+    text-align: left;
     padding: 1rem 0 1rem 0;
 }
 

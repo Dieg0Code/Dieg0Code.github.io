@@ -33,11 +33,6 @@ body.dark-theme {
     color: hsl(12, 48%, 94%);
 }
 
-.dark-theme .filters__button:hover {
-    background-color: hsl(270, 6%, 18%);
-    color: var(--first-color);
-}
-
 .dark-theme .filter-tab-active {
     background-color: hsl(270, 6%, 15%);
     color: var(--first-color);

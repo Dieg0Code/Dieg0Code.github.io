@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- https://www.youtube.com/watch?v=mq0xJxOTiYo&t=308s -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,43 +12,35 @@
     />
 
     <!-- ======== CSS ========= -->
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
     <title>Portfolio - Dieg0code</title>
     <link rel="icon" type="image/x-icon" href="/assets/img/favicon.svg" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body class="dark-theme">
-    <!-- Nuevo navbar -->
     <nav class="navbar">
       <ul class="navbar__list">
         <li class="navbar__item">
-          <a href="#home" class="navbar__link">Inicio</a>
+          <a href="../../index.html" class="navbar__link">Inicio</a>
         </li>
         <li class="navbar__item">
-          <a href="blog/index.html" class="navbar__link">Blog</a>
+          <a href="../index.html" class="navbar__link">Blog</a>
         </li>
       </ul>
-      <!-- Botón de cambio de tema -->
       <!-- <i class="ri-moon-line change-theme" id="theme-button"></i> -->
     </nav>
 
-    <!-- ======== HEADER PROFILE ========= -->
+    <!-- ========= Perfil ========= -->
     <header class="profile container">
       <div class="profile__container grid">
         <div class="profile__data">
           <div class="profile__border">
             <div class="profile__perfil">
-              <img src="assets/img/me.webp" alt="" />
+              <img src="../../assets/img/me.webp" alt="" />
             </div>
           </div>
 
           <h2 class="profile__name">Diego Obando Aguilera</h2>
-          <div class="profile__profession-wrapper">
-            <h3 class="profile__profession">Backend Developer</h3>
-          </div>
+          <h3 class="profile__profession">Analista programador</h3>
 
           <ul class="profile__social">
             <a
@@ -76,9 +67,13 @@
         </div>
 
         <div class="profile__buttons">
-          <a download="" href="assets/pdf/cv_diego_obando.pdf" class="button" tabindex="0">
-            <span>Descargar CV <i class="ri-download-line"></i></span>
-        </a>
+          <a
+            download=""
+            href="../../assets/pdf/cv_diego_obando.pdf"
+            class="button"
+          >
+            Descargar CV <i class="ri-download-line"></i>
+          </a>
 
           <div class="profile__buttons-small">
             <a
@@ -93,13 +88,13 @@
       </div>
     </header>
 
-    <!-- ======== MAIN ========= -->
+    <!-- ======== Proyectos ========= -->
     <main class="main">
       <section class="projects-section">
         <h2 class="projects-section__title">Proyectos</h2>
         <div class="projects-section__container">
           <!--  ======== Project 01 ========= -->
-          <div class="projects-section__card">
+          <article class="projects-section__card">
             <div class="projects-section-card__info">
               <h3 class="projects-section-card__title">Serverless Backend</h3>
               <p class="projects-section-card__description">
@@ -114,14 +109,14 @@
                 ><span>Ver</span></a
               >
             </div>
-          </div>
+          </article>
           <!--  ======== Project 02 ========= -->
-          <div class="projects-section__card">
+          <article class="projects-section__card">
             <div class="projects-section-card__info">
               <h3 class="projects-section-card__title">Monolithic API</h3>
               <p class="projects-section-card__description">
                 API Monolítica creada con <strong>GO</strong>,
-                <strong>Gin</strong>, <strong>GORM</strong> y <strong>PostgreSQL</strong>
+                <strong>Gin</strong> y <strong>PostgreSQL</strong>
               </p>
               <a
                 href="https://github.com/Dieg0Code/portfolio_02_lambda_api_scraper"
@@ -130,15 +125,15 @@
                 ><span>Ver</span></a
               >
             </div>
-          </div>
+          </article>
           <!--  ======== Project 03 ========= -->
-          <div class="projects-section__card">
+          <article class="projects-section__card">
             <div class="projects-section-card__info">
               <h3 class="projects-section-card__title">Microservices</h3>
               <p class="projects-section-card__description">
                 Arquitectura de <strong>Microservicios</strong> con
                 <strong>GO</strong>, <strong>Java</strong>,
-                <strong>TypeScript</strong> y <strong>Kubernetes</strong>.
+                <strong>TypeScript</strong>
               </p>
               <a
                 href="https://github.com/Dieg0Code/portfolio_03_microservices"
@@ -147,20 +142,10 @@
                 ><span>Ver</span></a
               >
             </div>
-          </div>
+          </article>
         </div>
       </section>
     </main>
-
-    <!-- ======== FOOTER ========= -->
-    <footer class="footer container">
-      <span class="footer_copy"> &#169; Dieg0Code. </span>
-    </footer>
-
-    <!-- ======== SCROLLREVEAL ========= -->
-    <script src="assets/js/scrollreveal.min.js"></script>
-
-    <!-- ======== MAIN JS ========= -->
-    <script src="assets/js/main.js"></script>
   </body>
+  <body></body>
 </html>
