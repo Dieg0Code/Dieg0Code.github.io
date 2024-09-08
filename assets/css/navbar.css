@@ -9,7 +9,7 @@
     margin-bottom: 2rem;
     z-index: 100;
     transition: 0.3s;
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
     display: flex; /* Flexbox para la alineación horizontal */
     align-items: center; /* Alinea los elementos verticalmente */
 }

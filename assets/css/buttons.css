@@ -16,7 +16,7 @@
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 6px 30px -10px rgba(var(--first-color-rgb), 0.5);
+    box-shadow: 0 6px 30px -10px rgba(var(--first-color), 0.5);
 }
 
 .button i {
@@ -46,7 +46,7 @@
 
 .button:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 30px -10px rgba(var(--first-color-rgb), 0.8);
+    box-shadow: 0 15px 30px -10px rgba(var(--first-color), 0.8);
 }
 
 .button:hover i {
@@ -55,13 +55,13 @@
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(var(--first-color-rgb), 0.7);
+        box-shadow: 0 0 0 0 rgba(var(--first-color), 0.7);
     }
     70% {
-        box-shadow: 0 0 0 20px rgba(var(--first-color-rgb), 0);
+        box-shadow: 0 0 0 20px rgba(var(--first-color), 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(var(--first-color-rgb), 0);
+        box-shadow: 0 0 0 0 rgba(var(--first-color), 0);
     }
 }
 

@@ -47,9 +47,9 @@
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    background-color: var(--body-color);
+    background-color: var(--body-color-alt);
     border-radius: 2rem;
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -57,7 +57,7 @@
 
 .projects-section__card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
 }
 
 

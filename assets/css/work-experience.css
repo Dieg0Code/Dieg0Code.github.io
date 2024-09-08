@@ -40,20 +40,20 @@
 
 .timeline-content {
   padding: 20px 30px;
-  background: var(--body-color);
+  background: var(--body-color-alt);
   position: relative;
   border-radius: 1.3rem;
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1);
+  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
   transition: all 0.3s ease;
 }
 
 .timeline-item:nth-child(odd) .timeline-content:hover {
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
   transform: translateX(-10px);
 }
 
 .timeline-item:nth-child(even) .timeline-content:hover {
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
   transform: translateX(10px);
 }
 
