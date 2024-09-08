@@ -33,5 +33,5 @@ img {
     height: auto;
 }
 strong {
-    color: var(--first-color);
+    color: var(--title-color);
 }

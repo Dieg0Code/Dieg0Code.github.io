@@ -25,6 +25,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    box-shadow: var(--neumorphism-shadow);
 }
 
 .profile__perfil img {
@@ -33,7 +34,7 @@
 }
 
 .profile__border {
-    border: 3.5px solid var(--first-color);
+    border: 3.5px solid var(--title-color);
     justify-self: center;
     width: 115px;
     height: 115px;
@@ -80,7 +81,7 @@
 
 .profile__profession-wrapper:hover .profile__profession {
   animation: shake 0.5s ease-in-out, flicker 2s linear both;
-  color: var(--first-color);
+  color: var(--title-color);
   font-weight: 700;
   text-shadow: -2px -2px 0px #ff0000, 2px 2px 0px #00e6f6;
 }
@@ -182,13 +183,13 @@
 
 
 .profile__social-link {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: var(--title-color);
     transition: 0.3s;
 }
 
 .profile__social-link:hover {
-    color: var(--first-color);
+  transform: translateY(-6px);
 }
 
 .profile__info {

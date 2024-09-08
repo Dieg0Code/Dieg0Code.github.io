@@ -7,7 +7,7 @@
 .projects-section__title {
     font-size: var(--h2-font-size);
     text-align: center;
-    color: var(--first-color);
+    color: var(--title-color);
     margin-bottom: 3rem;
     animation: fadeIn 2s ease;
 }
@@ -18,7 +18,7 @@
     display: block;
     width: 0px;
     height: 3px;
-    background-color: var(--first-color);
+    background-color: var(--title-color);
     margin: 1rem auto 0 auto;
     animation: expand-line 2s ease forwards;
 }
@@ -47,9 +47,10 @@
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    background-color: var(--body-color-alt);
+    background-color: var(--body-color);
     border-radius: 2rem;
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+    box-shadow: var(--neumorphism-shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -57,7 +58,8 @@
 
 .projects-section__card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
+    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6); */
+  box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
 }
 
 
@@ -71,12 +73,12 @@
 }
 
 .projects-section-card__info strong {
-    color: var(--first-color);
+    color: var(--title-color);
     font-weight: 600;
 }
 
 .projects-section-card__info:hover .projects-section-card__title {
-    color: var(--first-color);
+    /* color: var(--first-color); */
     transition: color 0.3s ease;
 }
 
@@ -88,7 +90,7 @@
 
 .projects-section-card__description {
     font-size: var(--normal-font-size);
-    color: var(--text-color);
+    color: var(--title-color);
     margin-bottom: 1rem;
 }
 
@@ -104,11 +106,11 @@
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
-    border: 1px solid var(--first-color);
+    border: 1px solid var(--title-color);
     border-radius: 25px;
     outline: none;
     overflow: hidden;
-    color: var(--first-color);
+    color: var(--title-color);
     transition: color 0.3s 0.1s ease-out;
     text-align: center;
     height: 3.5rem;
@@ -142,11 +144,11 @@
 
 .projects-section-card__button:hover {
     color: var(--body-color);
-    border-color: var(--first-color);
+    border-color: var(--title-color);
 }
 
 .projects-section-card__button:hover::before {
-    box-shadow: inset 0 0 0 10em var(--first-color);
+    box-shadow: inset 0 0 0 10em var(--title-color);
 }
 
 @media screen and (max-width: 768px) {

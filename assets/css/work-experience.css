@@ -15,7 +15,7 @@
   content: '';
   position: absolute;
   width: 2px;
-  background: var(--first-color);
+  background: var(--title-color);
   top: 0;
   bottom: 0;
   left: 50%;
@@ -40,32 +40,33 @@
 
 .timeline-content {
   padding: 20px 30px;
-  background: var(--body-color-alt);
+  background: var(--body-color);
   position: relative;
   border-radius: 1.3rem;
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+  box-shadow: var(--neumorphism-shadow);
   transition: all 0.3s ease;
 }
 
 .timeline-item:nth-child(odd) .timeline-content:hover {
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
+  box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
   transform: translateX(-10px);
 }
 
 .timeline-item:nth-child(even) .timeline-content:hover {
-  box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
+  box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
   transform: translateX(10px);
 }
 
 .timeline-content:hover h3,
 .timeline-content:hover p,
 .timeline-content:hover .timeline-date {
-  color: var(--first-color);
+  color: var(--title-color);
 }
 
 .timeline-date {
   font-weight: bold;
-  color: var(--first-color);
+  color: var(--title-color);
   margin-bottom: 0.5rem;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -81,7 +82,7 @@
 .timeline-dot {
   width: 20px;
   height: 20px;
-  background: var(--first-color);
+  background: var(--title-color);
   border-radius: 50%;
   position: absolute;
   top: 15px;
@@ -101,7 +102,7 @@
 
 .timeline-content p {
   margin: 0.5rem 0 1rem 0;
-  color: var(--text-color);
+  color: var(--title-color);
   transition: color 0.3s ease;
 }
 
@@ -112,7 +113,7 @@
 
 .timeline-content li {
   margin-bottom: 1rem;
-  color: var(--text-color);
+  color: var(--title-color);
 }
 
 @media screen and (max-width: 600px) {

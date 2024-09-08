@@ -1,50 +1,52 @@
 .about-me {
-    max-width: 968px;
-    margin: 5rem auto 0 auto;
-    padding: 1rem;
-    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1); */
+  max-width: 968px;
+  margin: 5rem auto 0 auto;
+  padding: 1rem;
+  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1); */
 }
 
 .about-me__content {
-    background: var(--body-color);
-    padding: 1.5rem;
-    border-radius: 1rem;
-    text-align: center;
-    transition: 0.3s ease;
-    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+  background: var(--body-color);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  transition: 0.3s ease;
+  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+  box-shadow: var(--neumorphism-shadow);
 }
 
 .about-me__content:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.6);
+  transform: translateY(-6px);
+  box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
 }
 
 .about-me__description {
-    font-size: var(--normal-font-size);
-    margin-bottom: 2rem;
-    font: var(--body-font);
-    color: var(--title-color);
+  font-size: var(--normal-font-size);
+  margin-bottom: 2rem;
+  font: var(--body-font);
+  color: var(--title-color);
 }
 
 .about-me__skills {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .about-me__skill {
-    background: var(--body-color);
-    color: var(--first-color);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font: var(--body-font);
-    font-size: var(--small-font-size);
-    font-weight: 900;
-    transition: 0.3s;
+  background: var(--body-color);
+  color: var(--title-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font: var(--body-font);
+  font-size: var(--small-font-size);
+  font-weight: 900;
+  transition: 0.3s;
 }
 
 .about-me__skill:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+  transform: translateY(-3px);
+  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+  box-shadow: var(--neumorphism-shadow);
 }

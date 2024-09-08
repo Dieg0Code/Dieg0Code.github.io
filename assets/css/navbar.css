@@ -9,7 +9,8 @@
     margin-bottom: 2rem;
     z-index: 100;
     transition: 0.3s;
-    box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3);
+    box-shadow: 5px 5px 10px #828282;
+    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
     display: flex; /* Flexbox para la alineación horizontal */
     align-items: center; /* Alinea los elementos verticalmente */
 }
@@ -46,18 +47,18 @@
     display: block;
     margin-top: 5px;
     right: 0;
-    background: var(--first-color);
+    background: var(--title-color);
     transition: width .3s ease, background-color .3s ease;
 }
 
 .navbar__link:hover::after {
     width: 100%;
     left: 0;
-    background: var(--first-color);
+    background: var(--title-color);
 }
 
 .navbar__link:hover {
-    color: var(--first-color);
+    color: var(--title-color);
     font-weight: 700;
     transition: .3s;
 }
