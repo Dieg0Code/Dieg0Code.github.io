@@ -15,10 +15,10 @@
   box-shadow: var(--neumorphism-shadow);
 }
 
-.about-me__content:hover {
+/* .about-me__content:hover {
   transform: translateY(-6px);
   box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
-}
+} */
 
 .about-me__description {
   font-size: var(--normal-font-size);
