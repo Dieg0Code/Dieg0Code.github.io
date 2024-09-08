@@ -1,4 +1,7 @@
-
+/* Eliminar el resaltado azul en dispositivos móviles */
+* {
+    -webkit-tap-highlight-color: transparent;
+  }
 
 /* Ajustes para el botón de cambio de tema */
 .change-theme {
