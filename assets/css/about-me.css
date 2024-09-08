@@ -6,7 +6,7 @@
 }
 
 .about-me__content {
-    background: var(--body-color-alt);
+    background: var(--body-color);
     padding: 1.5rem;
     border-radius: 1rem;
     text-align: center;
