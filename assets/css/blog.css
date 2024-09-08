@@ -117,7 +117,7 @@
 
 .blog-list__date {
   font-size: var(--smaller-font-size);
-  color: var(--text-light-color);
+  color: var(--text-color);
 }
 
 .blog-post__body-container {
