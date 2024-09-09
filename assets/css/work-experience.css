@@ -60,13 +60,13 @@
 
 .timeline-content:hover h3,
 .timeline-content:hover p,
-.timeline-content:hover .timeline-date {
+.timeline-content:hover {
   color: var(--title-color);
 }
 
 .timeline-date {
   font-weight: bold;
-  color: var(--title-color);
+  color: var(--text-color);
   margin-bottom: 0.5rem;
   transition: color 0.3s ease, transform 0.3s ease;
 }

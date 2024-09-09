@@ -107,7 +107,7 @@
     text-decoration: none;
     cursor: pointer;
     border: 1px solid var(--title-color);
-    border-radius: 25px;
+    border-radius: 26px;
     outline: none;
     overflow: hidden;
     color: var(--title-color);
@@ -142,12 +142,12 @@
     z-index: -1;
 }
 
-.projects-section-card__button:hover {
+.projects-section__card:hover .projects-section-card__button {
     color: var(--body-color);
     border-color: var(--title-color);
 }
 
-.projects-section-card__button:hover::before {
+.projects-section__card:hover .projects-section-card__button::before {
     box-shadow: inset 0 0 0 10em var(--title-color);
 }
 
