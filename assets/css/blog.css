@@ -127,7 +127,6 @@
   padding: 1rem;
   max-width: 90%;
   margin: 3rem auto 3rem auto;
-  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
   box-shadow: var(--neumorphism-shadow);
 }
 
