@@ -67,7 +67,17 @@
               <i class="ri-github-fill"></i>
             </a>
           </ul>
-        </div>
+
+          <div class="audio-player">
+            <audio id="myAudio" src="/assets/audio/about_me.m4a"></audio>
+            <button id="playPauseButton" class="audio-player__button">
+              <i class="ri-play-fill"></i>
+            </button>
+            <div class="audio-player__text-container">
+              <span class="audio-player__text">Want to know more about me?</span>
+              <!-- <span class="audio-player__text-hover">Generated with NotebookLM</span> -->
+            </div>
+          </div>
 
         <div class="lab__text-container">
           <div class="lab__text"></div>
@@ -83,6 +93,7 @@
           <a
             href="./cv/index.html"
             class="button"
+            target="_blank"
             tabindex="0"
           >
             <span>Descargar CV <i class="ri-download-line"></i></span>
@@ -99,7 +110,8 @@
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
     <!-- ======== MAIN ========= -->
     <main class="main">

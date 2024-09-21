@@ -18,3 +18,4 @@
 @import 'about-me.css';        /* Estilos para la sección "Sobre mí" */
 @import 'work-experience.css'; /* Estilos para la sección de experiencia laboral */
 @import 'cv.css';              /* Estilos para la sección de CV */
+@import 'audio-player.css';    /* Estilos para el reproductor de audio */

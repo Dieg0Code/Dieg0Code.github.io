@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 2rem auto; /* Ajusta el margen según tus necesidades */
+    margin: 0 auto 3rem auto; /* Ajusta el margen según tus necesidades */
 }
 
 .lab__text {

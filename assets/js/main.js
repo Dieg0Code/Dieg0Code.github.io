@@ -1,22 +1,47 @@
 /* =============== FILTERS TABS ======================== */
-const tabs = document.querySelectorAll('[data-target]'),
-    tabsContent = document.querySelectorAll('[data-content]');
+const tabs = document.querySelectorAll("[data-target]"),
+  tabsContent = document.querySelectorAll("[data-content]");
 
-tabs.forEach(tab =>{
-    tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.target);
-        
-        tabsContent.forEach(tc => { // tc = tabContent
-            tc.classList.remove('filters__active');
-        })
-        target.classList.add('filters__active');
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const target = document.querySelector(tab.dataset.target);
 
-        tabs.forEach(t => { // t = tab
-            t.classList.remove('filter-tab-active');
-        })
-        tab.classList.add('filter-tab-active');
-    })
-})
+    tabsContent.forEach((tc) => {
+      // tc = tabContent
+      tc.classList.remove("filters__active");
+    });
+    target.classList.add("filters__active");
+
+    tabs.forEach((t) => {
+      // t = tab
+      t.classList.remove("filter-tab-active");
+    });
+    tab.classList.add("filter-tab-active");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const audio = document.getElementById("myAudio");
+  const playPauseButton = document.getElementById("playPauseButton");
+  const icon = playPauseButton.querySelector("i");
+
+  playPauseButton.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      icon.classList.remove("ri-play-fill");
+      icon.classList.add("ri-pause-fill");
+    } else {
+      audio.pause();
+      icon.classList.remove("ri-pause-fill");
+      icon.classList.add("ri-play-fill");
+    }
+  });
+
+  audio.addEventListener("ended", () => {
+    icon.classList.remove("ri-pause-fill");
+    icon.classList.add("ri-play-fill");
+  });
+});
 
 /* =============== DARK LIGHT THEME ======================== */
 // const themeButton = document.getElementById('theme-button')
@@ -50,106 +75,105 @@ tabs.forEach(tab =>{
 
 /* =============== SCROLL REVEAL ANIMATION ======================== */
 const sr = ScrollReveal({
-    origin: 'top',
-    distance: '60px',
-    duration: 2500,
-    delay: 400,
-})
+  origin: "top",
+  distance: "60px",
+  duration: 2500,
+  delay: 400,
+});
 
-sr.reveal(`.profile__border`)
-sr.reveal(`.profile__name`, {delay: 500})
-sr.reveal(`.profile__profession`, {delay: 600})
-sr.reveal(`.profile__social`, {delay: 700})
-sr.reveal(`.profile__info-group`, {interval: 100, delay: 700})
-sr.reveal(`.profile__buttons`, {delay: 800})
-sr.reveal(`.filters__content`, {delay: 900})
-sr.reveal(`.filters`, {delay: 1000})
+sr.reveal(`.profile__border`);
+sr.reveal(`.profile__name`, { delay: 500 });
+sr.reveal(`.profile__profession`, { delay: 600 });
+sr.reveal(`.profile__social`, { delay: 700 });
+sr.reveal(`.profile__info-group`, { interval: 100, delay: 700 });
+sr.reveal(`.profile__buttons`, { delay: 800 });
+sr.reveal(`.filters__content`, { delay: 900 });
+sr.reveal(`.filters`, { delay: 1000 });
 
 // ——————————————————————————————————————————————————
 // TextScramble
 // ——————————————————————————————————————————————————
 
 class TextScramble {
-    constructor(el) {
-      this.el = el
-      this.chars = '!<>-_\\/[]{}—=+*^?#________'
-      this.update = this.update.bind(this)
+  constructor(el) {
+    this.el = el;
+    this.chars = "!<>-_\\/[]{}—=+*^?#________";
+    this.update = this.update.bind(this);
+  }
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise((resolve) => (this.resolve = resolve));
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || "";
+      const to = newText[i] || "";
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      this.queue.push({ from, to, start, end });
     }
-    setText(newText) {
-      const oldText = this.el.innerText
-      const length = Math.max(oldText.length, newText.length)
-      const promise = new Promise((resolve) => this.resolve = resolve)
-      this.queue = []
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || ''
-        const to = newText[i] || ''
-        const start = Math.floor(Math.random() * 40)
-        const end = start + Math.floor(Math.random() * 40)
-        this.queue.push({ from, to, start, end })
-      }
-      cancelAnimationFrame(this.frameRequest)
-      this.frame = 0
-      this.update()
-      return promise
-    }
-    update() {
-      let output = ''
-      let complete = 0
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i]
-        if (this.frame >= end) {
-          complete++
-          output += to
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.28) {
-            char = this.randomChar()
-            this.queue[i].char = char
-          }
-          output += `<span class="dud">${char}</span>`
-        } else {
-          output += from
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+  update() {
+    let output = "";
+    let complete = 0;
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = this.randomChar();
+          this.queue[i].char = char;
         }
-      }
-      this.el.innerHTML = output
-      if (complete === this.queue.length) {
-        this.resolve()
+        output += `<span class="dud">${char}</span>`;
       } else {
-        this.frameRequest = requestAnimationFrame(this.update)
-        this.frame++
+        output += from;
       }
     }
-    randomChar() {
-      return this.chars[Math.floor(Math.random() * this.chars.length)]
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
     }
   }
-  
-  // ——————————————————————————————————————————————————
-  // Example
-  // ——————————————————————————————————————————————————
-  
-  const phrases = [
-       
-    'eat 🍲',
-    'sleep 💤',
-    'code 💻',
-    'repeat 🔁',
-    // 'Solo es sabio quien',
-    // 'sabe que no sabe,',
-    // 'no quien se engaña',
-    // 'creyendo saber',
-    // 'e ignora incluso',
-    // 'su propia ignorancia.'
-  ]
-  
-  const el = document.querySelector('.lab__text')
-  const fx = new TextScramble(el)
-  
-  let counter = 0
-  const next = () => {
-    fx.setText(phrases[counter]).then(() => {
-      setTimeout(next, 800)
-    })
-    counter = (counter + 1) % phrases.length
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
   }
-  
-  next()
+}
+
+// ——————————————————————————————————————————————————
+// Example
+// ——————————————————————————————————————————————————
+
+const phrases = [
+  "eat 🍲",
+  "sleep 💤",
+  "code 💻",
+  "repeat 🔁",
+  // 'Solo es sabio quien',
+  // 'sabe que no sabe,',
+  // 'no quien se engaña',
+  // 'creyendo saber',
+  // 'e ignora incluso',
+  // 'su propia ignorancia.'
+];
+
+const el = document.querySelector(".lab__text");
+const fx = new TextScramble(el);
+
+let counter = 0;
+const next = () => {
+  fx.setText(phrases[counter]).then(() => {
+    setTimeout(next, 800);
+  });
+  counter = (counter + 1) % phrases.length;
+};
+
+next();
