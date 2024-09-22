@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ============ REMIX ICONS ============== -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
     <!-- ======== CSS ========= -->
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -74,32 +71,34 @@
               <i class="ri-play-fill"></i>
             </button>
             <div class="audio-player__text-container">
-              <span class="audio-player__text">Want to know more about me?</span>
+              <span class="audio-player__text"
+                >Want to know more about me?</span
+              >
               <!-- <span class="audio-player__text-hover">Generated with NotebookLM</span> -->
             </div>
           </div>
 
-        <div class="lab__text-container">
-          <div class="lab__text"></div>
-        </div>
+          <div class="lab__text-container">
+            <div class="lab__text"></div>
+          </div>
 
-        <div class="profile__buttons">
-          <!-- <a
+          <div class="profile__buttons">
+            <!-- <a
             download=""
             href="assets/pdf/cv_diego_obando.pdf"
             class="button"
             tabindex="0"
           > -->
-          <a
-            href="./cv/index.html"
-            class="button"
-            target="_blank"
-            tabindex="0"
-          >
-            <span>Descargar CV <i class="ri-download-line"></i></span>
-          </a>
+            <a
+              href="./cv/index.html"
+              class="button"
+              target="_blank"
+              tabindex="0"
+            >
+              <span>Descargar CV <i class="ri-download-line"></i></span>
+            </a>
 
-          <div class="profile__buttons-small">
+            <!-- <div class="profile__buttons-small">
             <a
               href="mailto:diegoobando20@gmail.com"
               target="_blank"
@@ -107,11 +106,16 @@
             >
               <i class="ri-mail-line"></i>
             </a>
+          </div> -->
+            <div class="profile__buttons-small">
+              <a class="button button__small button__gray">
+                <span>PIA <i class="ri-robot-3-fill"></i></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
     <!-- ======== MAIN ========= -->
     <main class="main">
@@ -245,10 +249,28 @@
       <span class="footer_copy"> &#169; Dieg0Code. </span>
     </footer>
 
+    <div id="aiAssistantModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Hola, Soy PIA <i class="ri-robot-2-line"></i> </h2>
+        <div id="chatHistory"></div>
+        <input type="text" id="chatInput" placeholder="Pregúntame algo..." />
+        <div class="button-container">
+          <a id="sendButton" href="#">
+            <i class="ri-send-plane-line"></i>
+          </a>
+          <a id="clearButton" href="#">
+            <i class="ri-delete-bin-line"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+
     <!-- ======== SCROLLREVEAL ========= -->
     <script src="assets/js/scrollreveal.min.js"></script>
 
     <!-- ======== MAIN JS ========= -->
-    <script src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>
