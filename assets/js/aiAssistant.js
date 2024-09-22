@@ -85,28 +85,30 @@ export function initAIAssistant() {
     }
   
     async function fetchResponse(query) {
-      try {
-        const response = await fetch(
-          "https://7m5vu6grr1.execute-api.sa-east-1.amazonaws.com/dev/api/v1/diary/rag-response",
-          {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ query: query }),
+        try {
+          const response = await fetch(
+            "https://7m5vu6grr1.execute-api.sa-east-1.amazonaws.com/dev/api/v1/diary/rag-response",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ query: query }),
+            }
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
-        );
-        const data = await response.json();
-        if (data.code === 200) {
-          addMessageToChat("PIA", data.data);
-        } else {
-          addMessageToChat("PIA", "Perdón, creo que algo falló.");
+          const data = await response.json();
+          if (data.code === 200) {
+            addMessageToChat("PIA", data.data);
+          } else {
+            addMessageToChat("PIA", `Lo siento, ocurrió un error: ${data.message || 'Desconocido'}`);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          addMessageToChat("PIA", `Lo siento, ocurrió un error: ${error.message}`);
         }
-      } catch (error) {
-        console.error("Error:", error);
-        addMessageToChat("PIA", "Perdón, creo que algo falló.");
       }
-    }
   }
   
