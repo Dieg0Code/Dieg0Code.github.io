@@ -90,6 +90,7 @@ export function initAIAssistant() {
           "https://7m5vu6grr1.execute-api.sa-east-1.amazonaws.com/dev/api/v1/diary/rag-response",
           {
             method: "POST",
+            mode: "no-cors",
             headers: {
               "Content-Type": "application/json",
             },
