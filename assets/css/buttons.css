@@ -123,6 +123,7 @@
 .button__small {
     padding: 1rem;
     box-shadow: none;
+    cursor: pointer;
 }
 
 .button__gray {
