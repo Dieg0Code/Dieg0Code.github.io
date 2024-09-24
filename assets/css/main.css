@@ -20,3 +20,4 @@
 @import 'cv.css';              /* Estilos para la sección de CV */
 @import 'audio-player.css';    /* Estilos para el reproductor de audio */
 @import 'assitant.css';       /* Estilos para el asistente virtual */
+@import 'markdown.css';        /* Estilos para la visualización de Markdown */

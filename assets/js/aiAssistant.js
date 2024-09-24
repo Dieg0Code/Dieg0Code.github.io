@@ -91,8 +91,13 @@ export function initAIAssistant() {
   }
 
   function addMessageToChat(sender, message) {
-    const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    const messageElement = document.createElement("div");
+    messageElement.className = "chat-message";
+    
+    // Renderiza el mensaje como markdown
+    const renderedMessage = marked.parse(message);
+    
+    messageElement.innerHTML = `<strong>${sender}:</strong> ${renderedMessage}`;
     chatHistory.appendChild(messageElement);
     chatHistory.scrollTop = chatHistory.scrollHeight;
   }
