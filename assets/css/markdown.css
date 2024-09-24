@@ -39,6 +39,10 @@
   margin-bottom: 0.25em;
 }
 
+.markdown-body strong {
+  background-color: var(--body-color);
+}
+
 .markdown-body code {
   padding: 0.2em 0.4em;
   margin: 0;
