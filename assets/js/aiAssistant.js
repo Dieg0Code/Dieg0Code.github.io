@@ -26,7 +26,6 @@ export function initAIAssistant() {
     btn.onclick = function (event) {
       event.preventDefault();
       openModal();
-      addMessageToChat("PIA", "Hola, soy la asistente virtual de Diego, puedes hacerme cualquier pregunta sobre él, estaré encantada de ayudarte.");
     };
   
     // Close the modal
