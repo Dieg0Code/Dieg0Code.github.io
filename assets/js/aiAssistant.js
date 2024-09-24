@@ -30,6 +30,13 @@ export function initAIAssistant() {
     openModal();
   };
 
+  // Open the modal on ctrl + i key press
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.key === "i") {
+      openModal();
+    }
+  });
+
   // Close the modal
   span.onclick = function () {
     closeModal();
