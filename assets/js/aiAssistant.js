@@ -13,6 +13,7 @@ export function initAIAssistant() {
   const openModal = () => {
     modal.classList.add("show");
     modal.style.display = "block";
+    document.getElementById("chatInput").focus();
   };
 
   // Función para cerrar el modal con animación
