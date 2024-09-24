@@ -40,7 +40,7 @@
 }
 
 .markdown-body strong {
-  background-color: var(--body-color);
+  color: var(--body-color);
 }
 
 .markdown-body code {
