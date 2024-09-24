@@ -127,8 +127,8 @@
 }
 
 #chatHistory {
-  min-height: 160px;
-  max-height: 160px;
+  min-height: 290px;
+  max-height: 290px;
   overflow-y: auto;
   margin-bottom: 15px;
   padding: 15px;
