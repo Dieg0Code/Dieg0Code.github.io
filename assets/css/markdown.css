@@ -42,9 +42,8 @@
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(255, 255, 255, 0.1); /* Claro pero sutil, adecuado para fondo oscuro */
+  background-color: rgba(27, 31, 35, 0.05);
   border-radius: 3px;
-  color: #f6f8fa; /* Texto claro para legibilidad */
 }
 
 .markdown-body pre {
@@ -52,11 +51,9 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: rgba(45, 42, 40, 0.8); /* Sutilmente más claro que el fondo del cuerpo, pero aún oscuro */
+  background-color: #f6f8fa;
   border-radius: 3px;
-  color: #f6f8fa; /* Texto claro para legibilidad */
 }
-
 
 .chat-message {
   margin-bottom: 15px;
