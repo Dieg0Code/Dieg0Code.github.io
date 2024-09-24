@@ -55,6 +55,7 @@
   line-height: 1.45;
   background-color: inherit;
   border-radius: 3px;
+  color: var(--body-color);
 }
 
 .markdown-body a[href^="mailto:"] {
