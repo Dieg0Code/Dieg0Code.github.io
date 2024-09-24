@@ -42,7 +42,8 @@
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27, 31, 35, 0.05);
+  background-color: inherit;
+  color: var(--first-color);
   border-radius: 3px;
 }
 
@@ -51,7 +52,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: inherit;
   border-radius: 3px;
 }
 
