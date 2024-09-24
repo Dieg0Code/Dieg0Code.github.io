@@ -73,6 +73,7 @@ export function initAIAssistant() {
   document.addEventListener("keydown", function (e) {
     if (e.ctrlKey && e.key === "l") {
       chatHistory.innerHTML = ""; // Limpiar el historial
+      chatHistoryArray = []; // Limpiar el historial
     }
   });
 
