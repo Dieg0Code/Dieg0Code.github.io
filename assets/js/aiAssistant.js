@@ -65,6 +65,13 @@ export function initAIAssistant() {
       event.preventDefault();
       chatHistory.innerHTML = ""; // Limpiar el historial
     });
+
+    // Clear chat history on ctrl + l key press
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey && e.key === "l") {
+        chatHistory.innerHTML = ""; // Limpiar el historial
+      }
+    });
     
   
     function sendMessage() {
