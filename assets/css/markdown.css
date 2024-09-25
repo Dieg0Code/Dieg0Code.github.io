@@ -62,8 +62,9 @@
   color: var(--body-color);
 }
 
+/* test */
 .markdown-body a {
-  color: var(--first-color);
+  color: var(--first-color); 
 }
 
 .markdown-body a[href^="mailto:"] {
