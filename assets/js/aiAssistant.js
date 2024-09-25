@@ -107,6 +107,12 @@ export function initAIAssistant() {
     
     messageElement.innerHTML = `<strong>${sender}:</strong> ${renderedMessage}`;
     chatHistory.appendChild(messageElement);
+    
+    const links = messageElement.querySelectorAll("a");
+    links.forEach((link) => {
+      link.setAttribute("target", "_blank");
+    });
+
     chatHistory.scrollTop = chatHistory.scrollHeight;
   }
 
