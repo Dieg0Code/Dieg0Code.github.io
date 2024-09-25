@@ -33,6 +33,7 @@
 .markdown-body ul,
 .markdown-body ol {
   padding-left: 2em;
+  list-style: disc;
 }
 
 .markdown-body li {
