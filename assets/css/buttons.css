@@ -1,140 +1,162 @@
 /* BUTTONS */
 .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background-color: var(--title-color);
-    color: var(--body-color);
-    border: none;
-    padding: 1.25rem 2rem;
-    border-radius: 50px;
-    font-size: var(--normal-font-size);
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--neumorphism-shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--title-color);
+  color: var(--body-color);
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 50px;
+  font-size: var(--normal-font-size);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--neumorphism-shadow);
 }
 
 .button i {
-    font-size: 1.5rem;
-    transition: transform 0.4s ease;
+  font-size: 1.5rem;
+  transition: transform 0.4s ease;
 }
 
 .button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent);
-    transition: all 0.6s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.6s ease;
 }
 
 .button:hover::before {
-    left: 100%;
+  left: 100%;
 }
 
 .button:hover {
-    transform: translateY(-5px) scale(1.05);
-    /* box-shadow: 0 15px 30px -10px rgba(var(--neumorphism-shadow), 0.3); */
+  transform: translateY(-5px) scale(1.05);
 }
 
 .button__small:hover i {
-    transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 
 @keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(var(--first-color), 0.7);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--first-color), 0.7);
+  }
 
-    70% {
-        box-shadow: 0 0 0 20px rgba(var(--first-color), 0);
-    }
+  70% {
+    box-shadow: 0 0 0 20px rgba(var(--first-color), 0);
+  }
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(var(--first-color), 0);
-    }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--first-color), 0);
+  }
 }
 
 .button:focus {
-    outline: none;
-    animation: pulse 2s infinite;
+  outline: none;
+  animation: pulse 2s infinite;
 }
 
 /* Efecto de partículas */
 .button .particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .button .particle {
-    position: absolute;
-    display: block;
-    pointer-events: none;
-    opacity: 0;
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  opacity: 0;
 }
 
 .button:hover .particle {
-    animation: rise 1s ease-in-out forwards;
+  animation: rise 1s ease-in-out forwards;
 }
 
 @keyframes rise {
-    0% {
-        opacity: 0;
-        transform: translateY(100%) scale(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0);
+  }
 
-    50% {
-        opacity: 1;
-    }
+  50% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-        transform: translateY(-100%) scale(1);
-    }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%) scale(1);
+  }
 }
 
 /* Estilos adicionales para el texto */
 .button span {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button span i {
-    margin-left: .5rem; /* Ajusta el espacio entre el texto y el icono según sea necesario */
+  margin-left: 0.5rem; /* Ajusta el espacio entre el texto y el icono según sea necesario */
 }
 
 .button__small {
-    padding: 1rem;
-    box-shadow: none;
-    cursor: pointer;
+  padding: 1rem;
+  box-shadow: none;
+  cursor: pointer;
+  position: relative; /* Necesario para el posicionamiento absoluto del pseudo-elemento */
+  overflow: hidden; /* Para asegurar que el pseudo-elemento no se desborde */
+}
+
+.button__small::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 215, 0, 0.6),
+    transparent
+  );
+  transition: all 0.6s ease;
+}
+
+.button__small:hover::before {
+  left: 100%;
 }
 
 .button__gray {
-    background-color: var(--body-color);
-    color: var(--title-color);
-    min-width: 5rem;
-    min-height: 2.5rem;
-    box-shadow: var(--neumorphism-shadow);
+  background-color: var(--title-color);
+  color: var(--body-color);
+  min-width: 5rem;
+  min-height: 2.5rem;
+  box-shadow: var(--neumorphism-shadow);
 }
 
 .button__gray:hover {
-    /* background-color: var(--text-color-light); */
-    box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
+  box-shadow: 0 0 10px gold, 0 0 20px gold, 0 0 30px gold, 0 0 40px gold;
 }
