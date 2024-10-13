@@ -30,7 +30,8 @@
   /* --body-color-alt: hsl(var(--hue), 26%, 98%); */
   --body-color-alt: #e0e0e0;
   --neumorphism-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
-  --neumorphism-inset-shadow: inset 5px 5px 10px #828282, inset -5px -5px 10px #ffffff;
+  --neumorphism-inset-shadow: inset 5px 5px 10px #828282,
+    inset -5px -5px 10px #ffffff;
   --container-color: #f7ebe8;
 
   /* Font and typography */
