@@ -17,7 +17,7 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
-  color: var(--body-color);
+  color: "#667eea";
 }
 
 .markdown-body h1 {
@@ -41,7 +41,7 @@
 }
 
 .markdown-body strong {
-  color: var(--body-color);
+  color: "#667eea";
 }
 
 .markdown-body code {
@@ -49,7 +49,7 @@
   margin: 0;
   font-size: 85%;
   background-color: inherit;
-  color: var(--first-color);
+  color: "#0d4f1a";
   border-radius: 3px;
 }
 
@@ -60,16 +60,16 @@
   line-height: 1.45;
   background-color: inherit;
   border-radius: 3px;
-  color: var(--body-color);
+  color: "#667eea";
 }
 
 /* test */
 .markdown-body a {
-  color: var(--first-color); 
+  color: "#0d4f1a";
 }
 
 .markdown-body a[href^="mailto:"] {
-  color: var(--first-color);
+  color: "#0d4f1a";
 }
 
 .chat-message {
