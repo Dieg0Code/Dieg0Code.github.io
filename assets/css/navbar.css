@@ -1,64 +1,189 @@
 /* Ajustes para el contenedor principal del navbar */
 .navbar {
-    position: fixed; /* Fija el navbar en la parte superior al hacer scroll */
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--body-color);
-    padding: 1rem 0; /* Espaciado superior e inferior */
-    margin-bottom: 2rem;
-    z-index: 100;
-    transition: 0.3s;
-    box-shadow: 5px 5px 10px #828282;
-    /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
-    display: flex; /* Flexbox para la alineación horizontal */
-    align-items: center; /* Alinea los elementos verticalmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  /* Fondo glassmorphism + neumórfico */
+  backdrop-filter: blur(10px);
+  background: rgba(240, 240, 240, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Sombra neumórfica mejorada */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  display: flex;
+  align-items: center;
+}
+
+/* Efecto de scroll - navbar más compacto */
+.navbar.scrolled {
+  padding: 0.5rem 0;
+  background: rgba(240, 240, 240, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 /* Ajustes para la lista de elementos del navbar */
 .navbar__list {
-    display: flex;
-    justify-content: center; /* Centra los elementos del navbar horizontalmente */
-    align-items: center; /* Alinea los elementos verticalmente */
-    list-style: none;
-    margin: 0 auto; 
-    flex-grow: 1; /* Ajusta el tamaño del navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0 auto;
+  flex-grow: 1;
+  gap: 2rem;
 }
 
 /* Ajustes para los elementos individuales del navbar */
 .navbar__item {
-    margin: 0 1rem;
+  position: relative;
 }
 
 /* Ajustes para los enlaces del navbar */
 .navbar__link {
-    color: var(--title-color);
-    font-size: var(--normal-font-size);
-    font-weight: 500;
-    position: relative;
-    transition: .3s;
+  color: var(--title-color);
+  font-size: var(--normal-font-size);
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  display: block;
+  text-align: center;
+  overflow: hidden;
 }
 
+/* Efecto de fondo con gradiente radiante */
+.navbar__link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.15),
+    rgba(118, 75, 162, 0.1)
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+/* Línea decorativa inferior */
 .navbar__link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    display: block;
-    margin-top: 5px;
-    right: 0;
-    background: var(--title-color);
-    transition: width .3s ease, background-color .3s ease;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: translateX(-50%);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Efectos hover */
+.navbar__link:hover::before {
+  width: 120%;
+  height: 150%;
 }
 
 .navbar__link:hover::after {
-    width: 100%;
-    left: 0;
-    background: var(--title-color);
+  width: 80%;
 }
 
 .navbar__link:hover {
-    color: var(--title-color);
-    font-weight: 700;
-    transition: .3s;
+  transform: translateY(-2px);
+  color: #667eea;
+  font-weight: 600;
+
+  /* Sombra neumórfica en hover */
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+    -2px -2px 6px rgba(255, 255, 255, 0.8),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Efecto activo/presionado */
+.navbar__link:active {
+  transform: translateY(0);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Indicador de página activa */
+.navbar__link.active {
+  color: #667eea;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.1);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.navbar__link.active::after {
+  width: 80%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* Animación de entrada del navbar */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.navbar {
+  animation: slideDown 0.6s ease-out;
+}
+
+/* Responsive para móviles */
+@media screen and (max-width: 767px) {
+  .navbar__list {
+    gap: 1rem;
+  }
+
+  .navbar__link {
+    padding: 0.5rem 1rem;
+    font-size: var(--small-font-size);
+  }
+}
+
+/* Mejoras de accesibilidad */
+.navbar__link:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+  border-radius: 25px;
+}
+
+/* Efecto de parpadeo para notificaciones */
+@keyframes notify {
+  0%,
+  100% {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+      -2px -2px 6px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+      -2px -2px 6px rgba(255, 255, 255, 0.8), 0 0 20px rgba(102, 126, 234, 0.5);
+  }
+}
+
+.navbar__link.notify {
+  animation: notify 2s ease-in-out infinite;
 }

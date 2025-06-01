@@ -1,4 +1,4 @@
-/* Modal styles */
+/* Modal styles mejorado */
 .modal {
   display: none;
   position: fixed;
@@ -7,10 +7,10 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  /* Transición de opacidad */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Animación de entrada del modal */
@@ -20,147 +20,397 @@
 }
 
 .modal-content {
-  background-color: var(--title-color);
-  margin: 5% auto;
-  padding: 30px;
-  border-radius: 8px;
+  background: var(--body-color);
+  margin: 3% auto;
+  padding: 2.5rem;
+  border-radius: 2rem;
   width: 90%;
   max-width: 900px;
   max-height: 90%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  transform: translateY(100%);
+  /* Efectos neumórficos mejorados */
+  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.1),
+    -20px -20px 40px rgba(255, 255, 255, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  transform: translateY(100%) scale(0.8);
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Mostrar el contenido con la animación de entrada */
+/* Efecto de brillo en el modal */
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(102, 126, 234, 0.05),
+    transparent
+  );
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.modal.show .modal-content::before {
+  left: 100%;
+}
+
+/* Mostrar el contenido con animación mejorada */
 .modal.show .modal-content {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   opacity: 1;
 }
 
 .modal-content h2 {
-  color: var(--body-color);
+  color: var(--title-color);
   font-size: var(--h2-font-size);
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
   text-align: center;
+  background: linear-gradient(45deg, var(--title-color), #667eea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
 }
 
 .modal-content h2 i {
   margin-left: 10px;
   vertical-align: middle;
-  color: #32DE8A;
+  color: #32de8a;
+  animation: robotBlink 3s ease infinite;
+  font-size: 2rem;
+}
+
+@keyframes robotBlink {
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.3;
+  }
 }
 
 .modal-content p {
-  color: var(--body-color);
+  color: #1a1a1a; /* CORREGIDO: texto mucho más oscuro para mejor legibilidad */
   font-size: var(--normal-font-size);
   margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+  line-height: 1.6; /* Agregado para mejor legibilidad */
 }
 
 .modal-content strong {
-  color: var(--body-color);
+  color: #0d4f1a; /* CORREGIDO: verde muy oscuro para mejor contraste */
+  font-weight: 600;
 }
 
 .close {
   color: var(--text-color);
-  float: right;
-  font-size: 30px;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--body-color);
+  box-shadow: var(--neumorphism-shadow);
+  z-index: 2;
 }
 
 .close:hover,
 .close:focus {
-  color: var(--body-color);
-  transform: scale(1.1);
+  color: #ff4757;
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
+/* CORREGIDO: Input con mejor contraste de texto */
 #chatInput {
   width: 100%;
-  padding: 12px;
-  margin: 15px 0;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
   border: none;
   border-radius: 2rem;
-  background-color: #2E2D2A;
-  color: var(--body-color);
+  background: var(--body-color);
+  color: #1a1a1a; /* CORREGIDO: texto más oscuro */
   font-size: var(--normal-font-size);
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.1),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
 }
 
 #chatInput:focus {
   outline: none;
+  box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.1),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.8),
+    0 0 0 2px rgba(102, 126, 234, 0.3);
+}
+
+#chatInput::placeholder {
+  color: rgba(26, 26, 26, 0.5); /* CORREGIDO: placeholder más oscuro */
 }
 
 .button-container {
   display: flex;
   justify-content: center;
-  /* Centra horizontalmente */
   align-items: center;
-  /* Centra verticalmente si el contenedor tiene altura */
-  margin-top: 10px;
-  /* Añade un margen superior si es necesario */
+  gap: 1rem;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 #sendButton,
 #clearButton {
   display: inline-flex;
   align-items: center;
-  background-color: #2E2D2A;
-  color: var(--text-color);
+  justify-content: center;
+  background: var(--body-color);
+  color: var(--title-color);
   border: none;
-  padding: 12px;
+  padding: 1rem;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1.5rem;
-  /* Aumenta el tamaño del icono */
-  transition: transform 0.3s ease;
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-decoration: none;
-  /* Quitar el subrayado */
+  position: relative;
+  overflow: hidden;
+
+  /* Efectos neumórficos */
+  box-shadow: var(--neumorphism-shadow);
+}
+
+/* Efecto de gradiente en hover */
+#sendButton::before,
+#clearButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  transition: left 0.3s ease;
+  z-index: -1;
+  border-radius: 50%;
 }
 
 #sendButton:hover,
 #clearButton:hover {
-  transform: scale(1.2);
-  /* Animación al pasar el mouse */
+  transform: translateY(-3px) scale(1.1);
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), var(--neumorphism-shadow);
 }
 
-/* Opcional: añadir margen para separar los botones */
-#sendButton {
-  margin-right: 10px;
+#sendButton:hover::before,
+#clearButton:hover::before {
+  left: 0;
 }
 
-#clearButton {
-  margin-left: 10px;
+#sendButton:active,
+#clearButton:active {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
 }
 
+/* Colores específicos para cada botón */
+#clearButton:hover {
+  color: white !important; /* CORREGIDO: ícono blanco para que sea visible sobre el fondo rojo */
+  transform: translateY(-3px) scale(1.1);
+}
+
+#clearButton::before {
+  background: linear-gradient(45deg, #ff4757, #ff3742);
+}
+
+/* CORREGIDO: Chat history con mejor contraste */
 #chatHistory {
-  min-height: 290px;
-  max-height: 290px;
+  min-height: 300px;
+  max-height: 300px;
   overflow-y: auto;
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #2E2D2A;
-  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  background: var(--body-color);
+  border-radius: 1.5rem;
   font-size: var(--small-font-size);
+  position: relative;
+  z-index: 1;
+  color: #1a1a1a; /* CORREGIDO: texto mucho más oscuro */
+
+  /* Efectos neumórficos internos suaves */
+  box-shadow: inset 8px 8px 16px rgba(0, 0, 0, 0.08),
+    inset -8px -8px 16px rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Scrollbar styles for webkit browsers */
+/* CORREGIDO: Mensajes con mejor contraste */
+.chat-message {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border-radius: 1rem;
+  background: rgba(102, 126, 234, 0.08);
+  border-left: 3px solid #667eea;
+  transition: all 0.3s ease;
+  animation: messageSlideIn 0.4s ease-out;
+  color: #1a1a1a; /* CORREGIDO: texto mucho más oscuro */
+}
+
+.chat-message:hover {
+  background: rgba(102, 126, 234, 0.12);
+  transform: translateX(5px);
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CORREGIDO: Etiquetas "Tu:" y "PIA:" más visibles */
+.chat-message strong {
+  color: #1a1a1a !important; /* CORREGIDO: negro oscuro para "Tu:" y "PIA:" */
+  font-weight: 600;
+}
+
+/* Estilo específico para mensajes del asistente */
+.assistant-message strong {
+  color: #0d4f1a !important; /* Verde oscuro para "PIA:" */
+}
+
+/* Estilo específico para mensajes del usuario */
+.user-message strong {
+  color: #2c3e50 !important; /* Azul oscuro para "Tu:" */
+}
+
+/* Scrollbar personalizado */
 #chatHistory::-webkit-scrollbar {
   width: 8px;
 }
 
 #chatHistory::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-#chatHistory::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 
+#chatHistory::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
 #chatHistory::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: linear-gradient(180deg, #764ba2, #667eea);
+}
+
+/* Responsive mejorado */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    margin: 2% auto;
+    padding: 2rem;
+    width: 95%;
+    border-radius: 1.5rem;
+  }
+
+  #chatHistory {
+    min-height: 250px;
+    max-height: 250px;
+    padding: 1rem;
+  }
+
+  #sendButton,
+  #clearButton {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .modal-content {
+    margin: 1% auto;
+    padding: 1.5rem;
+  }
+
+  .modal-content h2 {
+    font-size: var(--h3-font-size);
+  }
+
+  #chatInput {
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+/* Animación de typing para respuestas del AI */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0d4f1a; /* CORREGIDO: verde muy oscuro */
+  font-style: italic;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  background: #0d4f1a; /* CORREGIDO: verde muy oscuro */
+  border-radius: 50%;
+  animation: typingDots 1.4s ease infinite;
+}
+
+.typing-dots span:nth-child(1) {
+  animation-delay: 0s;
+}
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingDots {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
 }

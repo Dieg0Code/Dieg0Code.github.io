@@ -23,21 +23,30 @@
   </head>
   <body>
     <!-- Nuevo navbar -->
+    <!-- ...existing code... -->
     <nav class="navbar">
       <ul class="navbar__list">
         <li class="navbar__item">
           <a href="#home" class="navbar__link">Inicio</a>
         </li>
         <li class="navbar__item">
+          <a href="#about" class="navbar__link">Sobre Mí</a>
+        </li>
+        <li class="navbar__item">
+          <a href="#projects" class="navbar__link">Proyectos</a>
+        </li>
+        <li class="navbar__item">
+          <a href="#experience" class="navbar__link">Experiencia</a>
+        </li>
+        <li class="navbar__item">
           <a href="blog/index.html" class="navbar__link">Blog</a>
         </li>
       </ul>
-      <!-- Botón de cambio de tema -->
-      <!-- <i class="ri-moon-line change-theme" id="theme-button"></i> -->
     </nav>
+    <!-- ...existing code... -->
 
     <!-- ======== HEADER PROFILE ========= -->
-    <header class="profile container">
+    <header class="profile container" id="home">
       <div class="profile__container grid">
         <div class="profile__data">
           <div class="profile__border">
@@ -48,7 +57,7 @@
 
           <h2 class="profile__name">Diego Obando Aguilera</h2>
           <div class="profile__profession-wrapper">
-            <h3 class="profile__profession">Software Developer</h3>
+            <h3 class="profile__profession">Backend Developer</h3>
           </div>
 
           <ul class="profile__social">
@@ -69,15 +78,15 @@
           </ul>
 
           <div class="audio-player">
-            <audio id="myAudio" src="/assets/audio/about_me.m4a"></audio>
+            <audio id="myAudio"></audio>
             <button id="playPauseButton" class="audio-player__button">
               <i class="ri-play-fill"></i>
             </button>
             <div class="audio-player__text-container">
-              <span class="audio-player__text"
-                >Want to know more about me?</span
+              <span class="audio-player__text" id="audioText"
+                >¿Quieres saber más sobre mí?</span
               >
-              <!-- <span class="audio-player__text-hover">Generated with NotebookLM</span> -->
+              <span class="audio-player__text-hover" id="audioSubtext"></span>
             </div>
           </div>
 
@@ -107,30 +116,27 @@
     <!-- ======== MAIN ========= -->
     <main class="main">
       <!--  ======== ABOUT ME ========= -->
-      <section class="about-me container">
+      <section class="about-me container" id="about">
         <h2 class="projects-section__title">Sobre Mí</h2>
         <div class="about-me__content">
           <p class="about-me__description">
-            <strong>Backend developer</strong> autodidacta con título académico
-            en programación y análisis de sistemas. Desde <strong>2018</strong>,
-            he profundizado en diversas áreas como
-            <strong>DevOps, frontend y mobile</strong>, aunque mi verdadera
-            pasión es el backend. Me especializo en tecnologías como Go, Java y
-            TypeScript, y disfruto construyendo soluciones robustas y
-            escalables. Actualmente, también integro prácticas de DevOps para
-            optimizar mis flujos de trabajo.
+            Transformo ideas en <strong>sistemas que escalan</strong>. Backend
+            developer con experiencia en <strong>Go, Java y TypeScript</strong>,
+            desde APIs REST hasta arquitecturas serverless en
+            <strong>AWS</strong>. Mi enfoque: código limpio, testing riguroso y
+            soluciones que funcionan bajo presión.
           </p>
           <ul class="about-me__skills">
-            <li class="about-me__skill">Go</li>
-            <li class="about-me__skill">Gin</li>
+            <li class="about-me__skill" data-level="expert">Go</li>
+            <li class="about-me__skill" data-level="expert">Gin</li>
             <li class="about-me__skill">Java</li>
             <li class="about-me__skill">Spring Boot</li>
             <li class="about-me__skill">TypeScript</li>
             <li class="about-me__skill">Node.js</li>
             <li class="about-me__skill">AWS</li>
-            <li class="about-me__skill">Lambda</li>
+            <li class="about-me__skill" data-level="expert">Lambda</li>
             <li class="about-me__skill">DynamoDB</li>
-            <li class="about-me__skill">PostgreSQL</li>
+            <li class="about-me__skill" data-level="expert">PostgreSQL</li>
             <li class="about-me__skill">Terraform</li>
             <li class="about-me__skill">TDD</li>
             <li class="about-me__skill">Docker</li>
@@ -138,11 +144,11 @@
         </div>
       </section>
       <!--  ======== PROJECTS ========= -->
-      <section class="projects-section container">
+      <section class="projects-section container" id="projects">
         <h2 class="projects-section__title">Proyectos</h2>
         <div class="projects-section__container">
           <!--  ======== Project 01 ========= -->
-          <div class="projects-section__card">
+          <div class="projects-section__card" data-featured="true">
             <div class="projects-section-card__info">
               <h3 class="projects-section-card__title">Serverless Backend</h3>
               <p class="projects-section-card__description">
@@ -195,7 +201,7 @@
         </div>
       </section>
       <!--  ======== WORK EXPERIENCE ========= -->
-      <section class="work-experience container">
+      <section class="work-experience container" id="experience">
         <h2 class="projects-section__title">Experiencia Laboral</h2>
         <div class="timeline">
           <div class="timeline-item">

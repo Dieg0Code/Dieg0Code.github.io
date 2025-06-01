@@ -1,52 +1,92 @@
 /* PROFILE */
 .profile {
-    position: relative;
-    padding-top: 7rem;
-    margin-top: 2.5rem;
+  position: relative;
+  padding-top: 7rem;
+  margin-top: 2.5rem;
 }
 
 .profile__container {
-    row-gap: 2rem;
+  row-gap: 2rem;
 }
 
 .profile__data {
-    display: grid;
-    text-align: center;
+  display: grid;
+  text-align: center;
 }
 
 .profile__perfil {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(180deg,
-            hsla(var(--hue), var(--sat), var(--lig), 1) 0%,
-            hsla(var(--hue), var(--sat), var(--lig), 0.2) 100%);
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    box-shadow: var(--neumorphism-shadow);
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    hsla(var(--hue), var(--sat), var(--lig), 1) 0%,
+    hsla(var(--hue), var(--sat), var(--lig), 0.2) 100%
+  );
+  border-radius: 50%;
+  overflow: hidden; /* CORREGIDO: mantener hidden para la imagen */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  box-shadow: var(--neumorphism-shadow);
+  position: relative;
 }
 
-.profile__perfil img {
-    height: 100%;
-    width: 100%;
-}
-
+/* Efecto de borde animado FUERA del contenedor de la imagen */
 .profile__border {
-    border: 3.5px solid var(--title-color);
-    justify-self: center;
-    width: 115px;
-    height: 115px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    margin-bottom: 0.75rem;
+  border: 3.5px solid var(--title-color);
+  justify-self: center;
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.75rem;
+  position: relative; /* Agregar para el efecto animado */
+}
+
+/* Mover el efecto animado al border */
+.profile__border::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  border-radius: 50%;
+  z-index: -1;
+  animation: rotate 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile__border:hover::before {
+  opacity: 1;
+}
+
+/* Eliminar el ::before del perfil ya que se movió al border */
+.profile__perfil img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Agregar para mejor ajuste de imagen */
 }
 
 .profile__name {
-    font-size: var(--h2-font-size);
-    margin-bottom: 0.25rem;
+  font-size: var(--h2-font-size);
+  margin-bottom: 0.25rem;
+
+  /* Agregar efecto de texto gradiente */
+  background: linear-gradient(
+    45deg,
+    var(--title-color),
+    #667eea,
+    var(--title-color)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 3s ease infinite;
 }
 
 .profile__profession-wrapper {
@@ -55,27 +95,77 @@
   transition: 0.3s;
 }
 
-/* Efecto "shake" + "flicker" */
+/* Efecto "shake" + "flicker" mejorado */
 @keyframes shake {
-  0% { transform: translate(1px, 1px) skewX(1deg); }
-  10% { transform: translate(-1px, -2px) skewX(-1deg); }
-  20% { transform: translate(-3px, 0px) skewX(1deg); }
-  30% { transform: translate(3px, 2px) skewX(-1deg); }
-  40% { transform: translate(1px, -1px) skewX(1deg); }
-  50% { transform: translate(-1px, 2px) skewX(-1deg); }
-  60% { transform: translate(-3px, 1px) skewX(1deg); }
-  70% { transform: translate(3px, 1px) skewX(-1deg); }
-  80% { transform: translate(-1px, -1px) skewX(1deg); }
-  90% { transform: translate(1px, 2px) skewX(-1deg); }
-  100% { transform: translate(1px, -2px) skewX(1deg); }
+  0% {
+    transform: translate(1px, 1px) skewX(1deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) skewX(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) skewX(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) skewX(-1deg);
+  }
+  40% {
+    transform: translate(1px, -1px) skewX(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) skewX(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) skewX(1deg);
+  }
+  70% {
+    transform: translate(3px, 1px) skewX(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) skewX(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) skewX(-1deg);
+  }
+  100% {
+    transform: translate(1px, -2px) skewX(1deg);
+  }
 }
 
 @keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
     opacity: 1;
   }
-  20%, 24%, 55% {
+  20%,
+  24%,
+  55% {
     opacity: 0;
+  }
+}
+
+@keyframes gradientText {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
@@ -86,28 +176,33 @@
   text-shadow: -2px -2px 0px #ff0000, 2px 2px 0px #00e6f6;
 }
 
-
 /* Estilo base del h3 */
 .profile__profession {
   font-size: var(--normal-font-size);
   font-weight: 500;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   color: var(--text-color);
   transition: font-weight 0.3s ease;
   display: inline-block;
   position: relative;
 }
 
-/* Efecto glitch en el h3 */
+/* Efecto glitch en el h3 mejorado */
 .profile__profession::after {
-  content: "Backend Developer"; /* Texto de glitch */
+  content: "Software Developer"; /* Actualizado al texto correcto */
   display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, transparent 3%, var(--first-color) 3%, var(--first-color-alt) 5%, #000000 5%);
+  background: linear-gradient(
+    45deg,
+    transparent 3%,
+    var(--first-color) 3%,
+    var(--first-color-alt) 5%,
+    #000000 5%
+  );
   clip-path: inset(50% 50% 50% 50%);
   color: #fff;
   text-shadow: -2px -2px 0px #ff0000, 2px 2px 0px #00e6f6;
@@ -120,7 +215,7 @@
   animation: glitch 1s steps(2, end);
 }
 
-/* Animación glitch */
+/* Animación glitch mejorada */
 @keyframes glitch {
   0% {
     clip-path: inset(80% -6px 0 0);
@@ -173,56 +268,87 @@
   text-shadow: none;
 }
 
-
-
+/* Redes sociales mejoradas */
 .profile__social {
-    display: flex;
-    justify-content: center;
-    column-gap: 0.75rem;
+  display: flex;
+  justify-content: center;
+  column-gap: 0.75rem;
+  margin: 1.5rem 0;
 }
 
-
 .profile__social-link {
-    font-size: 1.8rem;
-    color: var(--title-color);
-    transition: 0.3s;
+  font-size: 1.8rem;
+  color: var(--title-color);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* CORREGIDO: Tamaño fijo para círculo perfecto */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: var(--body-color);
+  box-shadow: var(--neumorphism-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile__social-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.profile__social-link:hover::before {
+  left: 0;
 }
 
 .profile__social-link:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) scale(1.1);
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), var(--neumorphism-shadow);
 }
 
 .profile__info {
-    grid-template-columns: repeat(1, max-content);
-    justify-content: center;
-    column-gap: 2.5rem;
+  grid-template-columns: repeat(1, max-content);
+  justify-content: center;
+  column-gap: 2.5rem;
 }
 
 .profile__info-group {
-    text-align: center;
+  text-align: center;
 }
 
 .profile__info-number {
-    font-size: var(--normal-font-size);
-    margin-bottom: 0.25rem;
+  font-size: var(--normal-font-size);
+  margin-bottom: 0.25rem;
 }
 
 .profile__info-description {
-    font-size: var(--smaller-font-size);
-    font-weight: 500;
+  font-size: var(--smaller-font-size);
+  font-weight: 500;
 }
 
 .profile__buttons,
 .profile__buttons-small {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile__buttons {
-    column-gap: 1rem;
+  column-gap: 1rem;
+  margin-top: 2rem;
 }
 
 .profile__buttons-small {
-    column-gap: 0.25rem;
+  column-gap: 0.25rem;
 }

@@ -5,23 +5,23 @@
 /* ================= LAB ======================= */
 
 .lab__text-container {
-    width: 13rem; /* Ajusta el ancho según tus necesidades */
-    height: 3rem; /* Ajusta la altura según tus necesidades */
-    overflow: hidden; /* Asegúrate de que el texto no se desborde */
-    /* background-color: var(--title-color); */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 3rem auto; /* Ajusta el margen según tus necesidades */
+  width: 13rem; /* Ajusta el ancho según tus necesidades */
+  height: 3rem; /* Ajusta la altura según tus necesidades */
+  overflow: hidden; /* Asegúrate de que el texto no se desborde */
+  /* background-color: var(--title-color); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 3rem auto; /* Ajusta el margen según tus necesidades */
 }
 
 .lab__text {
-    font-family: 'Roboto Mono', monospace;
-    font-weight: 500;
-    font-size: 30px;
-    color: var(--title-color);
+  font-family: "Roboto Mono", monospace;
+  font-weight: 500;
+  font-size: 30px;
+  color: var(--title-color);
 }
 
 .dud {
-    color: #757575;
+  color: #757575;
 }

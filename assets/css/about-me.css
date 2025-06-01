@@ -2,51 +2,225 @@
   max-width: 968px;
   margin: 5rem auto 0 auto;
   padding: 1rem;
-  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.1); */
 }
 
 .about-me__content {
   background: var(--body-color);
-  padding: 1.5rem;
-  border-radius: 1rem;
+  padding: 2rem;
+  border-radius: 2rem;
   text-align: center;
-  transition: 0.3s ease;
-  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: var(--neumorphism-shadow);
+  position: relative;
+  overflow: hidden;
 }
 
-/* .about-me__content:hover {
-  transform: translateY(-6px);
-  box-shadow: 8px 8px 16px #828282, -8px -8px 16px #ffffff;
-} */
+/* Efecto de brillo sutil en el contenedor */
+.about-me__content::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.05),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.about-me__content:hover::before {
+  opacity: 1;
+}
+
+.about-me__content:hover {
+  transform: translateY(-8px);
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.1),
+    -15px -15px 30px rgba(255, 255, 255, 0.8),
+    inset 0 0 0 rgba(255, 255, 255, 0.1);
+}
 
 .about-me__description {
   font-size: var(--normal-font-size);
   margin-bottom: 2rem;
-  font: var(--body-font);
+  font-family: var(--body-font);
   color: var(--title-color);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
 }
 
 .about-me__skills {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  perspective: 1000px;
+  position: relative;
+  z-index: 1;
 }
 
 .about-me__skill {
   background: var(--body-color);
   color: var(--title-color);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font: var(--body-font);
+  padding: 0.75rem 1.25rem;
+  border-radius: 1rem;
+  font-family: var(--body-font);
   font-size: var(--small-font-size);
-  font-weight: 900;
-  transition: 0.3s;
+  font-weight: 600;
+
+  /* Efectos neumórficos mejorados */
+  box-shadow: var(--neumorphism-shadow);
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+
+  /* Cursor pointer para indicar interactividad */
+  cursor: pointer;
+}
+
+/* Efecto de fondo gradiente en las skills */
+.about-me__skill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: -1;
+  border-radius: 1rem;
+}
+
+.about-me__skill:hover::before {
+  left: 0;
+  opacity: 1;
 }
 
 .about-me__skill:hover {
-  transform: translateY(-3px);
-  /* box-shadow: 0 8px 24px hsla(var(--hue), var(--sat), var(--lig), 0.3); */
-  box-shadow: var(--neumorphism-shadow);
+  transform: translateY(-8px) rotateX(10deg);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 8px 8px 16px #c5c5c5,
+    -8px -8px 16px #ffffff;
+}
+
+/* Variación para skills pares */
+.about-me__skill:nth-child(even):hover {
+  transform: translateY(-8px) rotateX(-10deg);
+}
+
+/* Variación para skills impares con rotación Y */
+.about-me__skill:nth-child(odd):hover {
+  transform: translateY(-8px) rotateY(5deg);
+}
+
+/* Efecto de pulso en skills importantes */
+.about-me__skill[data-level="expert"] {
+  position: relative;
+}
+
+.about-me__skill[data-level="expert"]::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+  border-radius: 1rem;
+  z-index: -2;
+  animation: expertGlow 3s ease-in-out infinite;
+  opacity: 0;
+}
+
+.about-me__skill[data-level="expert"]:hover::after {
+  opacity: 0.6;
+}
+
+@keyframes expertGlow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+/* Animación de entrada escalonada para las skills */
+.about-me__skill {
+  animation: slideInUp 0.6s ease-out both;
+}
+
+.about-me__skill:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.about-me__skill:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.about-me__skill:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.about-me__skill:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.about-me__skill:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.about-me__skill:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.about-me__skill:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.about-me__skill:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive para móviles */
+@media screen and (max-width: 767px) {
+  .about-me {
+    margin: 3rem auto 0;
+  }
+
+  .about-me__content {
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .about-me__skills {
+    gap: 0.5rem;
+  }
+
+  .about-me__skill {
+    padding: 0.5rem 1rem;
+    font-size: var(--smaller-font-size);
+  }
+}
+
+/* Efectos de focus para accesibilidad */
+.about-me__skill:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }
