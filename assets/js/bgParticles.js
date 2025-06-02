@@ -26,9 +26,9 @@ export class ConwayGameOfLife {
     this.lastPopulation = 0;
 
     this.colors = {
-      alive: "#8B7CAE", // Tu violeta original
-      birthing: "#A08DC4", // Violeta balanceado para transición suave
-      dying: "#C9BFD8", // Violeta desaturado para desaparición elegante
+      alive: "#8B7CAE",
+      birthing: "#A08DC4",
+      dying: "#C9BFD8",
       background: "#F3F3F3",
     };
 
@@ -37,12 +37,12 @@ export class ConwayGameOfLife {
 
   getCellSize() {
     const isMobile = window.innerWidth < 768;
-    return isMobile ? 16 : 13; // Celdas más grandes para mejor rendimiento
+    return isMobile ? 16 : 13;
   }
 
   getUpdateInterval() {
     const isMobile = window.innerWidth < 768;
-    return isMobile ? 30 : 26; // Más rápido para que se vea fluido
+    return isMobile ? 30 : 26;
   }
 
   init() {
@@ -89,13 +89,9 @@ export class ConwayGameOfLife {
   }
 
   populateGrid() {
-    // Densidad inicial más alta pero controlada
-    const density = 0.08; // 8% de células vivas
-
-    // Agregar patrones estables distribuidos
+    const density = 0.07; // Densidad de células vivas
     this.addStablePatterns();
 
-    // Rellenar con células aleatorias
     for (let row = 0; row < this.rows; row++) {
       for (let col = 0; col < this.cols; col++) {
         if (Math.random() < density && this.grid[row][col] === 0) {
@@ -113,20 +109,16 @@ export class ConwayGameOfLife {
   }
 
   addStablePatterns() {
-    // Agregar algunos patrones estables distribuidos por la pantalla
     const patterns = [
-      // Bloque 2x2
       [
         [1, 1],
         [1, 1],
       ],
-      // Colmena
       [
         [0, 1, 1, 0],
         [1, 0, 0, 1],
         [0, 1, 1, 0],
       ],
-      // Barco
       [
         [1, 1, 0],
         [1, 0, 1],
@@ -134,7 +126,7 @@ export class ConwayGameOfLife {
       ],
     ];
 
-    const numPatterns = Math.floor((this.rows * this.cols) / 2000); // Más patrones
+    const numPatterns = Math.floor((this.rows * this.cols) / 2000);
 
     for (let p = 0; p < numPatterns; p++) {
       const pattern = patterns[Math.floor(Math.random() * patterns.length)];
@@ -165,24 +157,51 @@ export class ConwayGameOfLife {
   bindEvents() {
     window.addEventListener("resize", this.throttledResize.bind(this));
 
+    // Orientation change más controlado
+    let orientationTimer;
     window.addEventListener("orientationchange", () => {
-      setTimeout(() => this.resize(), 100);
+      clearTimeout(orientationTimer);
+      orientationTimer = setTimeout(() => {
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+
+        if (
+          Math.abs(this.canvas.width - newWidth) > 100 ||
+          Math.abs(this.canvas.height - newHeight) > 100
+        ) {
+          this.resize();
+        }
+      }, 300);
     });
 
-    document.addEventListener("click", (e) => {
-      this.addInteractivePattern(e.clientX, e.clientY);
+    // Touch más selectivo - solo si no está scrolleando
+    let isScrolling = false;
+    let scrollTimer;
+
+    window.addEventListener("scroll", () => {
+      isScrolling = true;
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
     });
 
     document.addEventListener("touchstart", (e) => {
-      if (e.touches.length > 0) {
+      if (e.touches.length === 1 && !isScrolling) {
         this.addInteractivePattern(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!isScrolling) {
+        this.addInteractivePattern(e.clientX, e.clientY);
       }
     });
   }
 
   throttledResize() {
     const now = Date.now();
-    if (now - this.lastResize < 300) return;
+    if (now - this.lastResize < 500) return; // Más throttling para móvil
 
     this.lastResize = now;
     if (this.isResizing) return;
@@ -191,16 +210,19 @@ export class ConwayGameOfLife {
     setTimeout(() => {
       this.resize();
       this.isResizing = false;
-    }, 100);
+    }, 200);
   }
 
   resize() {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
 
+    // Umbral más alto para móvil
+    const threshold = window.innerWidth < 768 ? 150 : 50;
+
     if (
-      Math.abs(this.canvas.width - newWidth) > 50 ||
-      Math.abs(this.canvas.height - newHeight) > 50
+      Math.abs(this.canvas.width - newWidth) > threshold ||
+      Math.abs(this.canvas.height - newHeight) > threshold
     ) {
       this.canvas.width = newWidth;
       this.canvas.height = newHeight;
@@ -217,17 +239,13 @@ export class ConwayGameOfLife {
     const col = Math.floor(x / this.cellSize);
     const row = Math.floor(y / this.cellSize);
 
-    // Patrones más interesantes
     const patterns = [
-      // Glider
       [
         [0, 1, 0],
         [0, 0, 1],
         [1, 1, 1],
       ],
-      // Pequeño oscilador
       [[1, 1, 1]],
-      // Bloque
       [
         [1, 1],
         [1, 1],
@@ -287,7 +305,6 @@ export class ConwayGameOfLife {
   updateGame() {
     const cellsToCheck = new Set();
 
-    // Solo verificar células activas y sus vecinos
     for (const cellKey of this.activeCells) {
       const [row, col] = cellKey.split("-").map(Number);
 
@@ -343,7 +360,6 @@ export class ConwayGameOfLife {
 
     [this.grid, this.nextGrid] = [this.nextGrid, this.grid];
 
-    // Limpiar nextGrid más eficientemente
     for (const cellKey of cellsToCheck) {
       const [row, col] = cellKey.split("-").map(Number);
       this.nextGrid[row][col] = 0;
@@ -351,22 +367,19 @@ export class ConwayGameOfLife {
 
     this.generationCount++;
 
-    // Verificar si necesitamos agregar vida
     if (this.activeCells.size < 20 || this.generationCount % 100 === 0) {
       this.maintainLife();
     }
   }
 
   maintainLife() {
-    // Agregar vida de manera más inteligente
-    const targetPopulation = Math.floor(this.rows * this.cols * 0.03); // 3% objetivo
+    const targetPopulation = Math.floor(this.rows * this.cols * 0.03);
     const currentPopulation = this.activeCells.size;
 
     if (currentPopulation < targetPopulation) {
       const toAdd = Math.min(10, targetPopulation - currentPopulation);
 
       for (let i = 0; i < toAdd; i++) {
-        // Encontrar un lugar vacío cerca de células existentes
         let placed = false;
         let attempts = 0;
 
@@ -374,7 +387,6 @@ export class ConwayGameOfLife {
           let row, col;
 
           if (this.activeCells.size > 0 && Math.random() < 0.7) {
-            // 70% del tiempo, colocar cerca de células existentes
             const randomCell = Array.from(this.activeCells)[
               Math.floor(Math.random() * this.activeCells.size)
             ];
@@ -394,7 +406,6 @@ export class ConwayGameOfLife {
               )
             );
           } else {
-            // 30% del tiempo, colocar aleatoriamente
             row = Math.floor(Math.random() * this.rows);
             col = Math.floor(Math.random() * this.cols);
           }
@@ -421,7 +432,7 @@ export class ConwayGameOfLife {
 
     for (const [key, state] of this.cellStates) {
       const diff = state.target - state.current;
-      state.current += diff * 0.15; // Más rápido
+      state.current += diff * 0.15;
 
       if (state.target === 1) {
         state.opacity = Math.min(1, state.opacity + 0.1);
@@ -441,7 +452,6 @@ export class ConwayGameOfLife {
     this.ctx.fillStyle = this.colors.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Dibujar todas las células con estado
     for (const [cellKey, state] of this.cellStates) {
       if (state.opacity > 0.01) {
         const [row, col] = cellKey.split("-").map(Number);
@@ -449,7 +459,6 @@ export class ConwayGameOfLife {
       }
     }
 
-    // Dibujar células activas sin estado de transición
     for (const cellKey of this.activeCells) {
       if (!this.cellStates.has(cellKey)) {
         const [row, col] = cellKey.split("-").map(Number);
