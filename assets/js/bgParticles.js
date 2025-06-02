@@ -1,29 +1,62 @@
-export class GeometricFlowSystem {
+export class ConwayGameOfLife {
   constructor() {
     this.canvas = null;
     this.ctx = null;
-    this.shapes = [];
     this.animationId = null;
-    this.mouse = { x: 0, y: 0 };
-    this.time = 0;
-    this.mouseClicks = [];
-    this.lastResize = 0; // Para throttle del resize
+    this.lastResize = 0;
     this.isResizing = false;
+
+    // Configuración optimizada
+    this.cellSize = this.getCellSize();
+    this.cols = 0;
+    this.rows = 0;
+    this.grid = [];
+    this.nextGrid = [];
+
+    // Control de animación más fluido
+    this.frameCount = 0;
+    this.updateInterval = this.getUpdateInterval();
+
+    // Solo trackear células activas
+    this.activeCells = new Set();
+    this.cellStates = new Map();
+
+    // Para mantener vida constante
+    this.generationCount = 0;
+    this.lastPopulation = 0;
+
+    this.colors = {
+      alive: "#8B7CAE", // Tu violeta original
+      birthing: "#A08DC4", // Violeta balanceado para transición suave
+      dying: "#C9BFD8", // Violeta desaturado para desaparición elegante
+      background: "#F3F3F3",
+    };
 
     this.init();
   }
 
+  getCellSize() {
+    const isMobile = window.innerWidth < 768;
+    return isMobile ? 16 : 13; // Celdas más grandes para mejor rendimiento
+  }
+
+  getUpdateInterval() {
+    const isMobile = window.innerWidth < 768;
+    return isMobile ? 30 : 26; // Más rápido para que se vea fluido
+  }
+
   init() {
     this.createCanvas();
-    this.createShapes();
+    this.initializeGrid();
+    this.populateGrid();
     this.bindEvents();
     this.animate();
-    console.log("Geometric flow system initialized");
+    console.log("Conway's Game of Life initialized");
   }
 
   createCanvas() {
     this.canvas = document.createElement("canvas");
-    this.canvas.id = "geometric-flow-canvas";
+    this.canvas.id = "conway-canvas";
     this.canvas.style.cssText = `
       position: fixed;
       top: 0;
@@ -32,7 +65,7 @@ export class GeometricFlowSystem {
       height: 100%;
       pointer-events: none;
       z-index: -1;
-      opacity: 0.6;
+      opacity: 0.7;
     `;
 
     document.body.insertBefore(this.canvas, document.body.firstChild);
@@ -40,87 +73,116 @@ export class GeometricFlowSystem {
     this.resize();
   }
 
-  createShapes() {
-    const shapeCount = Math.floor(
-      (this.canvas.width * this.canvas.height) / 25000
-    );
+  initializeGrid() {
+    this.cols = Math.floor(this.canvas.width / this.cellSize);
+    this.rows = Math.floor(this.canvas.height / this.cellSize);
 
-    this.shapes = [];
-    for (let i = 0; i < shapeCount; i++) {
-      this.shapes.push({
-        x: Math.random() * this.canvas.width,
-        y: Math.random() * this.canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 25 + 15,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-        type: Math.floor(Math.random() * 6), // 6 tipos de figuras
-        color: this.getRandomColor(),
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.03 + 0.01,
-        opacity: Math.random() * 0.8 + 0.5,
-        sides: Math.floor(Math.random() * 3) + 5, // Para polígonos
-      });
+    this.grid = Array(this.rows)
+      .fill()
+      .map(() => Array(this.cols).fill(0));
+    this.nextGrid = Array(this.rows)
+      .fill()
+      .map(() => Array(this.cols).fill(0));
+
+    this.activeCells.clear();
+    this.cellStates.clear();
+  }
+
+  populateGrid() {
+    // Densidad inicial más alta pero controlada
+    const density = 0.08; // 8% de células vivas
+
+    // Agregar patrones estables distribuidos
+    this.addStablePatterns();
+
+    // Rellenar con células aleatorias
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        if (Math.random() < density && this.grid[row][col] === 0) {
+          this.grid[row][col] = 1;
+          const key = `${row}-${col}`;
+          this.activeCells.add(key);
+          this.cellStates.set(key, {
+            current: 1,
+            target: 1,
+            opacity: 1,
+          });
+        }
+      }
     }
   }
 
-  getRandomColor() {
-    const colors = [
-      "#667eea", // Azul vibrante pero elegante
-      "#764ba2", // Púrpura sofisticado
-      "#f093fb", // Rosa suave
-      "#4facfe", // Azul cielo
-      "#43e97b", // Verde esmeralda
-      "#38ef7d", // Verde menta
-      "#fa709a", // Rosa coral
-      "#fee140", // Amarillo dorado
-      "#a8edea", // Turquesa suave
-      "#ff6b6b", // Rojo coral
-      "#4ecdc4", // Turquesa vibrante
-      "#45b7d1", // Azul océano
+  addStablePatterns() {
+    // Agregar algunos patrones estables distribuidos por la pantalla
+    const patterns = [
+      // Bloque 2x2
+      [
+        [1, 1],
+        [1, 1],
+      ],
+      // Colmena
+      [
+        [0, 1, 1, 0],
+        [1, 0, 0, 1],
+        [0, 1, 1, 0],
+      ],
+      // Barco
+      [
+        [1, 1, 0],
+        [1, 0, 1],
+        [0, 1, 0],
+      ],
     ];
-    return colors[Math.floor(Math.random() * colors.length)];
+
+    const numPatterns = Math.floor((this.rows * this.cols) / 2000); // Más patrones
+
+    for (let p = 0; p < numPatterns; p++) {
+      const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+      const startRow = Math.floor(Math.random() * (this.rows - pattern.length));
+      const startCol = Math.floor(
+        Math.random() * (this.cols - pattern[0].length)
+      );
+
+      for (let i = 0; i < pattern.length; i++) {
+        for (let j = 0; j < pattern[i].length; j++) {
+          if (pattern[i][j] === 1) {
+            const row = startRow + i;
+            const col = startCol + j;
+            this.grid[row][col] = 1;
+            const key = `${row}-${col}`;
+            this.activeCells.add(key);
+            this.cellStates.set(key, {
+              current: 1,
+              target: 1,
+              opacity: 1,
+            });
+          }
+        }
+      }
+    }
   }
 
   bindEvents() {
-    // Throttle del resize para evitar recreación constante
     window.addEventListener("resize", this.throttledResize.bind(this));
 
-    // En mobile, evitar resize por scroll
     window.addEventListener("orientationchange", () => {
       setTimeout(() => this.resize(), 100);
     });
 
-    document.addEventListener("mousemove", (e) => {
-      this.mouse.x = e.clientX;
-      this.mouse.y = e.clientY;
-    });
-
-    // También manejar touch en mobile
-    document.addEventListener("touchmove", (e) => {
-      if (e.touches.length > 0) {
-        this.mouse.x = e.touches[0].clientX;
-        this.mouse.y = e.touches[0].clientY;
-      }
-    });
-
-    // Eventos de clic y touch
     document.addEventListener("click", (e) => {
-      this.createMouseWave(e.clientX, e.clientY);
+      this.addInteractivePattern(e.clientX, e.clientY);
     });
 
     document.addEventListener("touchstart", (e) => {
       if (e.touches.length > 0) {
-        this.createMouseWave(e.touches[0].clientX, e.touches[0].clientY);
+        this.addInteractivePattern(e.touches[0].clientX, e.touches[0].clientY);
       }
     });
   }
 
-  // Throttle para resize - evita recreación constante
   throttledResize() {
     const now = Date.now();
-    if (now - this.lastResize < 200) return; // Solo resize cada 200ms
+    if (now - this.lastResize < 300) return;
 
     this.lastResize = now;
     if (this.isResizing) return;
@@ -136,7 +198,6 @@ export class GeometricFlowSystem {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
 
-    // Solo redimensionar si hay cambio significativo
     if (
       Math.abs(this.canvas.width - newWidth) > 50 ||
       Math.abs(this.canvas.height - newHeight) > 50
@@ -144,289 +205,288 @@ export class GeometricFlowSystem {
       this.canvas.width = newWidth;
       this.canvas.height = newHeight;
 
-      // Solo recrear formas si hay un cambio muy grande
-      if (
-        this.shapes.length === 0 ||
-        Math.abs(this.canvas.width - newWidth) > 200
-      ) {
-        this.createShapes();
-      } else {
-        // Solo ajustar posiciones existentes
-        this.adjustExistingShapes();
-      }
+      this.cellSize = this.getCellSize();
+      this.updateInterval = this.getUpdateInterval();
+
+      this.initializeGrid();
+      this.populateGrid();
     }
   }
 
-  // Nueva función para ajustar formas sin recrear
-  adjustExistingShapes() {
-    this.shapes.forEach((shape) => {
-      // Mantener formas dentro del nuevo canvas
-      if (shape.x > this.canvas.width) shape.x = this.canvas.width - 50;
-      if (shape.y > this.canvas.height) shape.y = this.canvas.height - 50;
-      if (shape.x < 0) shape.x = 50;
-      if (shape.y < 0) shape.y = 50;
-    });
-  }
+  addInteractivePattern(x, y) {
+    const col = Math.floor(x / this.cellSize);
+    const row = Math.floor(y / this.cellSize);
 
-  // Nueva función para crear ondas en el clic
-  createMouseWave(x, y) {
-    this.mouseClicks.push({
-      x: x,
-      y: y,
-      radius: 0,
-      maxRadius: 100,
-      opacity: 1,
-      speed: 3,
-      time: 0,
-    });
+    // Patrones más interesantes
+    const patterns = [
+      // Glider
+      [
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 1, 1],
+      ],
+      // Pequeño oscilador
+      [[1, 1, 1]],
+      // Bloque
+      [
+        [1, 1],
+        [1, 1],
+      ],
+    ];
 
-    // Limitar el número de ondas simultáneas
-    if (this.mouseClicks.length > 5) {
-      this.mouseClicks.shift();
-    }
-  }
+    const pattern = patterns[Math.floor(Math.random() * patterns.length)];
 
-  // Actualizar función para manejar las ondas de clic
-  updateMouseWaves() {
-    this.mouseClicks = this.mouseClicks.filter((wave) => {
-      wave.radius += wave.speed;
-      wave.time += 1;
-      wave.opacity = 1 - wave.radius / wave.maxRadius;
+    for (let i = 0; i < pattern.length; i++) {
+      for (let j = 0; j < pattern[i].length; j++) {
+        const newRow = row + i;
+        const newCol = col + j;
 
-      return wave.radius < wave.maxRadius;
-    });
-  }
-
-  // Nueva función para dibujar solo las ondas de clic
-  drawMouseWaves() {
-    this.mouseClicks.forEach((wave) => {
-      this.ctx.save();
-      this.ctx.globalAlpha = wave.opacity * 0.7;
-      this.ctx.strokeStyle = "#764ba2"; // Púrpura
-      this.ctx.lineWidth = 2.5;
-      this.ctx.setLineDash([6, 3]);
-      this.ctx.beginPath();
-      this.ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
-      this.ctx.stroke();
-      this.ctx.restore();
-
-      // Onda interior más pequeña para efecto doble
-      if (wave.radius > 10) {
-        this.ctx.save();
-        this.ctx.globalAlpha = wave.opacity * 0.4;
-        this.ctx.strokeStyle = "#43e97b"; // Verde
-        this.ctx.lineWidth = 1.5;
-        this.ctx.setLineDash([3, 6]);
-        this.ctx.beginPath();
-        this.ctx.arc(wave.x, wave.y, wave.radius * 0.6, 0, Math.PI * 2);
-        this.ctx.stroke();
-        this.ctx.restore();
-      }
-    });
-  }
-
-  updateShape(shape) {
-    shape.x += shape.vx;
-    shape.y += shape.vy;
-    shape.rotation += shape.rotationSpeed;
-    shape.pulse += shape.pulseSpeed;
-
-    // Efecto magnético del mouse
-    const dx = this.mouse.x - shape.x;
-    const dy = this.mouse.y - shape.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance < 100) {
-      const force = ((100 - distance) / 100) * 0.02;
-      shape.vx += (dx / distance) * force;
-      shape.vy += (dy / distance) * force;
-    }
-
-    // Mantener velocidad
-    const speed = Math.sqrt(shape.vx * shape.vx + shape.vy * shape.vy);
-    if (speed > 0.5) {
-      shape.vx = (shape.vx / speed) * 0.5;
-      shape.vy = (shape.vy / speed) * 0.5;
-    }
-
-    // Rebote en bordes
-    if (shape.x < 0 || shape.x > this.canvas.width) {
-      shape.vx *= -1;
-      shape.x = Math.max(0, Math.min(this.canvas.width, shape.x));
-    }
-    if (shape.y < 0 || shape.y > this.canvas.height) {
-      shape.vy *= -1;
-      shape.y = Math.max(0, Math.min(this.canvas.height, shape.y));
-    }
-  }
-
-  drawShape(shape) {
-    const pulseSize = shape.size + Math.sin(shape.pulse) * 2;
-    const pulseOpacity = shape.opacity + Math.sin(shape.pulse) * 0.2;
-
-    this.ctx.save();
-    this.ctx.translate(shape.x, shape.y);
-    this.ctx.rotate(shape.rotation);
-    this.ctx.globalAlpha = pulseOpacity;
-    this.ctx.fillStyle = shape.color;
-    this.ctx.strokeStyle = shape.color;
-    this.ctx.lineWidth = 3;
-
-    // Dibujar según el tipo (6 tipos)
-    switch (shape.type) {
-      case 0: // Círculo
-        this.ctx.beginPath();
-        this.ctx.arc(0, 0, pulseSize / 2, 0, Math.PI * 2);
-        this.ctx.stroke();
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fill();
-        break;
-
-      case 1: // Triángulo
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, -pulseSize / 2);
-        this.ctx.lineTo(-pulseSize / 2, pulseSize / 2);
-        this.ctx.lineTo(pulseSize / 2, pulseSize / 2);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fill();
-        break;
-
-      case 2: // Cuadrado
-        this.ctx.strokeRect(
-          -pulseSize / 2,
-          -pulseSize / 2,
-          pulseSize,
-          pulseSize
-        );
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fillRect(-pulseSize / 2, -pulseSize / 2, pulseSize, pulseSize);
-        break;
-
-      case 3: // Polígono (pentágono/hexágono)
-        this.drawPolygon(0, 0, pulseSize / 2, shape.sides);
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fill();
-        break;
-
-      case 4: // Estrella
-        this.drawStar(0, 0, pulseSize / 2, pulseSize / 4, 5);
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fill();
-        break;
-
-      case 5: // Rombo
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, -pulseSize / 2);
-        this.ctx.lineTo(pulseSize / 2, 0);
-        this.ctx.lineTo(0, pulseSize / 2);
-        this.ctx.lineTo(-pulseSize / 2, 0);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.globalAlpha = pulseOpacity * 0.2;
-        this.ctx.fill();
-        break;
-    }
-
-    this.ctx.restore();
-  }
-
-  // Nueva función para dibujar polígonos
-  drawPolygon(x, y, radius, sides) {
-    this.ctx.beginPath();
-    for (let i = 0; i < sides; i++) {
-      const angle = (i * 2 * Math.PI) / sides;
-      const px = x + radius * Math.cos(angle);
-      const py = y + radius * Math.sin(angle);
-      if (i === 0) {
-        this.ctx.moveTo(px, py);
-      } else {
-        this.ctx.lineTo(px, py);
-      }
-    }
-    this.ctx.closePath();
-    this.ctx.stroke();
-  }
-
-  // Nueva función para dibujar estrellas
-  drawStar(x, y, outerRadius, innerRadius, points) {
-    this.ctx.beginPath();
-    for (let i = 0; i < points * 2; i++) {
-      const angle = (i * Math.PI) / points;
-      const radius = i % 2 === 0 ? outerRadius : innerRadius;
-      const px = x + radius * Math.cos(angle);
-      const py = y + radius * Math.sin(angle);
-      if (i === 0) {
-        this.ctx.moveTo(px, py);
-      } else {
-        this.ctx.lineTo(px, py);
-      }
-    }
-    this.ctx.closePath();
-    this.ctx.stroke();
-  }
-
-  drawConnections() {
-    for (let i = 0; i < this.shapes.length; i++) {
-      for (let j = i + 1; j < this.shapes.length; j++) {
-        const shape1 = this.shapes[i];
-        const shape2 = this.shapes[j];
-
-        const dx = shape1.x - shape2.x;
-        const dy = shape1.y - shape2.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 120) {
-          const opacity = ((120 - distance) / 120) * 0.5;
-
-          this.ctx.save();
-          this.ctx.globalAlpha = opacity;
-          this.ctx.strokeStyle = "#667eea";
-          this.ctx.lineWidth = 2;
-          this.ctx.setLineDash([4, 6]);
-          this.ctx.beginPath();
-          this.ctx.moveTo(shape1.x, shape1.y);
-          this.ctx.lineTo(shape2.x, shape2.y);
-          this.ctx.stroke();
-          this.ctx.restore();
+        if (
+          newRow >= 0 &&
+          newRow < this.rows &&
+          newCol >= 0 &&
+          newCol < this.cols
+        ) {
+          if (pattern[i][j] === 1) {
+            this.grid[newRow][newCol] = 1;
+            const key = `${newRow}-${newCol}`;
+            this.activeCells.add(key);
+            this.cellStates.set(key, {
+              current: 0,
+              target: 1,
+              opacity: 0,
+            });
+          }
         }
       }
     }
   }
 
-  drawMouseEffect() {
-    // Solo dibujar un pequeño glow sutil alrededor del cursor
-    this.ctx.save();
-    this.ctx.globalAlpha = 0.1;
-    this.ctx.fillStyle = "#f093fb";
-    this.ctx.shadowColor = "#f093fb";
-    this.ctx.shadowBlur = 15;
+  countNeighbors(row, col) {
+    let count = 0;
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue;
+
+        const newRow = row + i;
+        const newCol = col + j;
+
+        if (
+          newRow >= 0 &&
+          newRow < this.rows &&
+          newCol >= 0 &&
+          newCol < this.cols
+        ) {
+          count += this.grid[newRow][newCol];
+        }
+      }
+    }
+    return count;
+  }
+
+  updateGame() {
+    const cellsToCheck = new Set();
+
+    // Solo verificar células activas y sus vecinos
+    for (const cellKey of this.activeCells) {
+      const [row, col] = cellKey.split("-").map(Number);
+
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          const newRow = row + i;
+          const newCol = col + j;
+
+          if (
+            newRow >= 0 &&
+            newRow < this.rows &&
+            newCol >= 0 &&
+            newCol < this.cols
+          ) {
+            cellsToCheck.add(`${newRow}-${newCol}`);
+          }
+        }
+      }
+    }
+
+    this.activeCells.clear();
+
+    for (const cellKey of cellsToCheck) {
+      const [row, col] = cellKey.split("-").map(Number);
+      const neighbors = this.countNeighbors(row, col);
+      const currentState = this.grid[row][col];
+
+      let newState = 0;
+      if (currentState === 1) {
+        if (neighbors === 2 || neighbors === 3) {
+          newState = 1;
+        }
+      } else {
+        if (neighbors === 3) {
+          newState = 1;
+        }
+      }
+
+      this.nextGrid[row][col] = newState;
+
+      if (newState === 1) {
+        this.activeCells.add(cellKey);
+      }
+
+      if (currentState !== newState) {
+        this.cellStates.set(cellKey, {
+          current: currentState,
+          target: newState,
+          opacity: currentState,
+        });
+      }
+    }
+
+    [this.grid, this.nextGrid] = [this.nextGrid, this.grid];
+
+    // Limpiar nextGrid más eficientemente
+    for (const cellKey of cellsToCheck) {
+      const [row, col] = cellKey.split("-").map(Number);
+      this.nextGrid[row][col] = 0;
+    }
+
+    this.generationCount++;
+
+    // Verificar si necesitamos agregar vida
+    if (this.activeCells.size < 20 || this.generationCount % 100 === 0) {
+      this.maintainLife();
+    }
+  }
+
+  maintainLife() {
+    // Agregar vida de manera más inteligente
+    const targetPopulation = Math.floor(this.rows * this.cols * 0.03); // 3% objetivo
+    const currentPopulation = this.activeCells.size;
+
+    if (currentPopulation < targetPopulation) {
+      const toAdd = Math.min(10, targetPopulation - currentPopulation);
+
+      for (let i = 0; i < toAdd; i++) {
+        // Encontrar un lugar vacío cerca de células existentes
+        let placed = false;
+        let attempts = 0;
+
+        while (!placed && attempts < 20) {
+          let row, col;
+
+          if (this.activeCells.size > 0 && Math.random() < 0.7) {
+            // 70% del tiempo, colocar cerca de células existentes
+            const randomCell = Array.from(this.activeCells)[
+              Math.floor(Math.random() * this.activeCells.size)
+            ];
+            const [baseRow, baseCol] = randomCell.split("-").map(Number);
+            row = Math.max(
+              0,
+              Math.min(
+                this.rows - 1,
+                baseRow + Math.floor(Math.random() * 6) - 3
+              )
+            );
+            col = Math.max(
+              0,
+              Math.min(
+                this.cols - 1,
+                baseCol + Math.floor(Math.random() * 6) - 3
+              )
+            );
+          } else {
+            // 30% del tiempo, colocar aleatoriamente
+            row = Math.floor(Math.random() * this.rows);
+            col = Math.floor(Math.random() * this.cols);
+          }
+
+          if (this.grid[row][col] === 0) {
+            this.grid[row][col] = 1;
+            const key = `${row}-${col}`;
+            this.activeCells.add(key);
+            this.cellStates.set(key, {
+              current: 0,
+              target: 1,
+              opacity: 0,
+            });
+            placed = true;
+          }
+          attempts++;
+        }
+      }
+    }
+  }
+
+  updateCellStates() {
+    const keysToRemove = [];
+
+    for (const [key, state] of this.cellStates) {
+      const diff = state.target - state.current;
+      state.current += diff * 0.15; // Más rápido
+
+      if (state.target === 1) {
+        state.opacity = Math.min(1, state.opacity + 0.1);
+      } else {
+        state.opacity = Math.max(0, state.opacity - 0.05);
+      }
+
+      if (Math.abs(diff) < 0.01 && state.opacity < 0.01) {
+        keysToRemove.push(key);
+      }
+    }
+
+    keysToRemove.forEach((key) => this.cellStates.delete(key));
+  }
+
+  draw() {
+    this.ctx.fillStyle = this.colors.background;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Dibujar todas las células con estado
+    for (const [cellKey, state] of this.cellStates) {
+      if (state.opacity > 0.01) {
+        const [row, col] = cellKey.split("-").map(Number);
+        this.drawCell(row, col, state);
+      }
+    }
+
+    // Dibujar células activas sin estado de transición
+    for (const cellKey of this.activeCells) {
+      if (!this.cellStates.has(cellKey)) {
+        const [row, col] = cellKey.split("-").map(Number);
+        this.drawCell(row, col, { opacity: 1, current: 1 });
+      }
+    }
+  }
+
+  drawCell(row, col, state) {
+    if (state.opacity < 0.01) return;
+
+    const x = col * this.cellSize;
+    const y = row * this.cellSize;
+
+    this.ctx.globalAlpha = state.opacity * 0.9;
+    this.ctx.fillStyle = this.colors.alive;
+
+    const centerX = x + this.cellSize / 2;
+    const centerY = y + this.cellSize / 2;
+    const radius = (this.cellSize - 2) / 2;
+
     this.ctx.beginPath();
-    this.ctx.arc(this.mouse.x, this.mouse.y, 8, 0, Math.PI * 2);
+    this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
     this.ctx.fill();
-    this.ctx.restore();
+
+    this.ctx.globalAlpha = 1;
   }
 
   animate() {
-    this.time++;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.frameCount++;
 
-    // Dibujar conexiones primero
-    this.drawConnections();
+    if (this.frameCount % this.updateInterval === 0) {
+      this.updateGame();
+    }
 
-    // Actualizar y dibujar formas
-    this.shapes.forEach((shape) => {
-      this.updateShape(shape);
-      this.drawShape(shape);
-    });
-
-    // Efecto sutil del mouse (solo glow)
-    this.drawMouseEffect();
-
-    // Actualizar y dibujar ondas de clic
-    this.updateMouseWaves();
-    this.drawMouseWaves();
+    this.updateCellStates();
+    this.draw();
 
     this.animationId = requestAnimationFrame(() => this.animate());
   }
@@ -443,8 +503,8 @@ export class GeometricFlowSystem {
 
 export function initNeuralWaves() {
   console.log(
-    "Initializing geometric flow system, screen width:",
+    "Initializing Conway's Game of Life, screen width:",
     window.innerWidth
   );
-  return new GeometricFlowSystem();
+  return new ConwayGameOfLife();
 }
