@@ -22,7 +22,7 @@
   --first-color-alt: hsl(var(--hue), var(--sat), 59%);
   /* -4% */
   --title-color: #252422;
-  --text-color: #828282;
+  --text-color: #04080f;
   --text-color-light: hsl(var(--hue), 8%, 75%);
   --text-color-lighten: hsl(var(--hue), 8%, 92%);
   /* --body-color: hsl(var(--hue), 100%, 99%); */

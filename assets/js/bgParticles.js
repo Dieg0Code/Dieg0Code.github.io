@@ -6,7 +6,9 @@ export class GeometricFlowSystem {
     this.animationId = null;
     this.mouse = { x: 0, y: 0 };
     this.time = 0;
-    this.mouseClicks = []; // Array para almacenar los clics
+    this.mouseClicks = [];
+    this.lastResize = 0; // Para throttle del resize
+    this.isResizing = false;
 
     this.init();
   }
@@ -50,14 +52,15 @@ export class GeometricFlowSystem {
         y: Math.random() * this.canvas.height,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 25 + 15, // Aumentar de 20+10 a 25+15
+        size: Math.random() * 25 + 15,
         rotation: Math.random() * Math.PI * 2,
         rotationSpeed: (Math.random() - 0.5) * 0.02,
-        type: Math.floor(Math.random() * 3),
+        type: Math.floor(Math.random() * 6), // 6 tipos de figuras
         color: this.getRandomColor(),
         pulse: Math.random() * Math.PI * 2,
         pulseSpeed: Math.random() * 0.03 + 0.01,
-        opacity: Math.random() * 0.8 + 0.5, // Aumentar opacidad mínima
+        opacity: Math.random() * 0.8 + 0.5,
+        sides: Math.floor(Math.random() * 3) + 5, // Para polígonos
       });
     }
   }
@@ -73,29 +76,96 @@ export class GeometricFlowSystem {
       "#fa709a", // Rosa coral
       "#fee140", // Amarillo dorado
       "#a8edea", // Turquesa suave
-      "#667eea", // Azul (repetido para mayor probabilidad)
+      "#ff6b6b", // Rojo coral
+      "#4ecdc4", // Turquesa vibrante
+      "#45b7d1", // Azul océano
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
   bindEvents() {
-    window.addEventListener("resize", () => this.resize());
+    // Throttle del resize para evitar recreación constante
+    window.addEventListener("resize", this.throttledResize.bind(this));
+
+    // En mobile, evitar resize por scroll
+    window.addEventListener("orientationchange", () => {
+      setTimeout(() => this.resize(), 100);
+    });
 
     document.addEventListener("mousemove", (e) => {
       this.mouse.x = e.clientX;
       this.mouse.y = e.clientY;
     });
 
-    // Agregar evento de clic para crear ondas
+    // También manejar touch en mobile
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        this.mouse.x = e.touches[0].clientX;
+        this.mouse.y = e.touches[0].clientY;
+      }
+    });
+
+    // Eventos de clic y touch
     document.addEventListener("click", (e) => {
       this.createMouseWave(e.clientX, e.clientY);
     });
+
+    document.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 0) {
+        this.createMouseWave(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    });
+  }
+
+  // Throttle para resize - evita recreación constante
+  throttledResize() {
+    const now = Date.now();
+    if (now - this.lastResize < 200) return; // Solo resize cada 200ms
+
+    this.lastResize = now;
+    if (this.isResizing) return;
+
+    this.isResizing = true;
+    setTimeout(() => {
+      this.resize();
+      this.isResizing = false;
+    }, 100);
   }
 
   resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.createShapes();
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+
+    // Solo redimensionar si hay cambio significativo
+    if (
+      Math.abs(this.canvas.width - newWidth) > 50 ||
+      Math.abs(this.canvas.height - newHeight) > 50
+    ) {
+      this.canvas.width = newWidth;
+      this.canvas.height = newHeight;
+
+      // Solo recrear formas si hay un cambio muy grande
+      if (
+        this.shapes.length === 0 ||
+        Math.abs(this.canvas.width - newWidth) > 200
+      ) {
+        this.createShapes();
+      } else {
+        // Solo ajustar posiciones existentes
+        this.adjustExistingShapes();
+      }
+    }
+  }
+
+  // Nueva función para ajustar formas sin recrear
+  adjustExistingShapes() {
+    this.shapes.forEach((shape) => {
+      // Mantener formas dentro del nuevo canvas
+      if (shape.x > this.canvas.width) shape.x = this.canvas.width - 50;
+      if (shape.y > this.canvas.height) shape.y = this.canvas.height - 50;
+      if (shape.x < 0) shape.x = 50;
+      if (shape.y < 0) shape.y = 50;
+    });
   }
 
   // Nueva función para crear ondas en el clic
@@ -132,7 +202,7 @@ export class GeometricFlowSystem {
     this.mouseClicks.forEach((wave) => {
       this.ctx.save();
       this.ctx.globalAlpha = wave.opacity * 0.7;
-      this.ctx.strokeStyle = "#764ba2"; // Violeta vibrante
+      this.ctx.strokeStyle = "#764ba2"; // Púrpura
       this.ctx.lineWidth = 2.5;
       this.ctx.setLineDash([6, 3]);
       this.ctx.beginPath();
@@ -144,7 +214,7 @@ export class GeometricFlowSystem {
       if (wave.radius > 10) {
         this.ctx.save();
         this.ctx.globalAlpha = wave.opacity * 0.4;
-        this.ctx.strokeStyle = "#43e97b";
+        this.ctx.strokeStyle = "#43e97b"; // Verde
         this.ctx.lineWidth = 1.5;
         this.ctx.setLineDash([3, 6]);
         this.ctx.beginPath();
@@ -200,15 +270,14 @@ export class GeometricFlowSystem {
     this.ctx.globalAlpha = pulseOpacity;
     this.ctx.fillStyle = shape.color;
     this.ctx.strokeStyle = shape.color;
-    this.ctx.lineWidth = 3; // Aumentar de 1.5 a 3 para más grosor
+    this.ctx.lineWidth = 3;
 
-    // Dibujar según el tipo
+    // Dibujar según el tipo (6 tipos)
     switch (shape.type) {
       case 0: // Círculo
         this.ctx.beginPath();
         this.ctx.arc(0, 0, pulseSize / 2, 0, Math.PI * 2);
         this.ctx.stroke();
-        // Agregar relleno sutil para más presencia
         this.ctx.globalAlpha = pulseOpacity * 0.2;
         this.ctx.fill();
         break;
@@ -220,7 +289,6 @@ export class GeometricFlowSystem {
         this.ctx.lineTo(pulseSize / 2, pulseSize / 2);
         this.ctx.closePath();
         this.ctx.stroke();
-        // Relleno sutil
         this.ctx.globalAlpha = pulseOpacity * 0.2;
         this.ctx.fill();
         break;
@@ -232,13 +300,71 @@ export class GeometricFlowSystem {
           pulseSize,
           pulseSize
         );
-        // Relleno sutil
         this.ctx.globalAlpha = pulseOpacity * 0.2;
         this.ctx.fillRect(-pulseSize / 2, -pulseSize / 2, pulseSize, pulseSize);
+        break;
+
+      case 3: // Polígono (pentágono/hexágono)
+        this.drawPolygon(0, 0, pulseSize / 2, shape.sides);
+        this.ctx.globalAlpha = pulseOpacity * 0.2;
+        this.ctx.fill();
+        break;
+
+      case 4: // Estrella
+        this.drawStar(0, 0, pulseSize / 2, pulseSize / 4, 5);
+        this.ctx.globalAlpha = pulseOpacity * 0.2;
+        this.ctx.fill();
+        break;
+
+      case 5: // Rombo
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, -pulseSize / 2);
+        this.ctx.lineTo(pulseSize / 2, 0);
+        this.ctx.lineTo(0, pulseSize / 2);
+        this.ctx.lineTo(-pulseSize / 2, 0);
+        this.ctx.closePath();
+        this.ctx.stroke();
+        this.ctx.globalAlpha = pulseOpacity * 0.2;
+        this.ctx.fill();
         break;
     }
 
     this.ctx.restore();
+  }
+
+  // Nueva función para dibujar polígonos
+  drawPolygon(x, y, radius, sides) {
+    this.ctx.beginPath();
+    for (let i = 0; i < sides; i++) {
+      const angle = (i * 2 * Math.PI) / sides;
+      const px = x + radius * Math.cos(angle);
+      const py = y + radius * Math.sin(angle);
+      if (i === 0) {
+        this.ctx.moveTo(px, py);
+      } else {
+        this.ctx.lineTo(px, py);
+      }
+    }
+    this.ctx.closePath();
+    this.ctx.stroke();
+  }
+
+  // Nueva función para dibujar estrellas
+  drawStar(x, y, outerRadius, innerRadius, points) {
+    this.ctx.beginPath();
+    for (let i = 0; i < points * 2; i++) {
+      const angle = (i * Math.PI) / points;
+      const radius = i % 2 === 0 ? outerRadius : innerRadius;
+      const px = x + radius * Math.cos(angle);
+      const py = y + radius * Math.sin(angle);
+      if (i === 0) {
+        this.ctx.moveTo(px, py);
+      } else {
+        this.ctx.lineTo(px, py);
+      }
+    }
+    this.ctx.closePath();
+    this.ctx.stroke();
   }
 
   drawConnections() {
@@ -252,13 +378,13 @@ export class GeometricFlowSystem {
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 120) {
-          const opacity = ((120 - distance) / 120) * 0.6; // Aumentar opacidad
+          const opacity = ((120 - distance) / 120) * 0.5;
 
           this.ctx.save();
           this.ctx.globalAlpha = opacity;
           this.ctx.strokeStyle = "#667eea";
-          this.ctx.lineWidth = 5; // Aumentar de 1.2 a 2
-          this.ctx.setLineDash([4, 6]); // Líneas punteadas más marcadas
+          this.ctx.lineWidth = 2;
+          this.ctx.setLineDash([4, 6]);
           this.ctx.beginPath();
           this.ctx.moveTo(shape1.x, shape1.y);
           this.ctx.lineTo(shape2.x, shape2.y);
@@ -269,7 +395,6 @@ export class GeometricFlowSystem {
     }
   }
 
-  // Eliminar la función drawMouseEffect anterior y reemplazar con esto:
   drawMouseEffect() {
     // Solo dibujar un pequeño glow sutil alrededor del cursor
     this.ctx.save();
